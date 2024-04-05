@@ -10,6 +10,8 @@ import { useAuth } from "../../../../app/modules/auth";
 import { Dropdown1 } from "../../../partials/content/dropdown/Dropdown1";
 import { TitleProvider, useTitle } from "../../../../app/routing/TitleProvider";
 import NotificationsContainer from "./NotificationsContainer"; // Import NotificationsContainer
+import API from "../../../../app/ApiRoutes";
+import axios from "axios";
 
 const HeaderToolbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -26,8 +28,20 @@ const HeaderToolbar = () => {
   const { classes } = useLayout();
   const [status, setStatus] = useState<string>("1");
   const { currentUser, logout } = useAuth();
+  const [notifications, setIsNotifications] = useState([])
 
+  const fetchNotifications = async () => {
+    try{
+      const response:any = await axios.get(`${API.CANDIDATE_URL}/job/getNotifications`);
+      // console.log("response", response.data.notifications)
+      setIsNotifications(response.data.notifications.slice(0, 5))
+      // console.log(response.data.notifications)
+    }catch(error){
+      console.log('error', error)
+    }
+  }
   useEffect(() => {
+    fetchNotifications()
     const slider: target = document.querySelector(
       "#kt_toolbar_slider"
     ) as target;
@@ -78,7 +92,7 @@ const HeaderToolbar = () => {
             <i className="pr-3 justify-content-lg-between bi bi-bell-fill fs-3"></i>
             Notifications
           </button>
-          {isNotificationsOpen && <NotificationsContainer />} {/* Render NotificationsContainer if isNotificationsOpen is true */}
+          {isNotificationsOpen && <NotificationsContainer notifications={notifications} />} {/* Render NotificationsContainer if isNotificationsOpen is true */}
           {/* Logout button */}
           <button
             className="p-4 px-6 font-bold bg-gray-200 rounded fs-5"

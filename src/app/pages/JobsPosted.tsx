@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../ApiRoutes";
 import ConfirmationModal from "./confirmationModal";
+import toast from "react-hot-toast";
+import CustomPagination from "../component/CustomPagination";
+import { PaginationControl } from "react-bootstrap-pagination-control";
 
 type DataResponse = {
   _id: number;
@@ -15,6 +18,7 @@ type DataResponse = {
   subject: string;
   location: string;
   createdAt: any;
+  client: string;
   applicantCount: number;
   actions: string;
 };
@@ -23,19 +27,33 @@ const JobsPosted = () => {
   const [data, setData] = useState<DataResponse[]>([]);
 
   const [searchItem, setSearchItem] = useState("");
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
+  const [total, setTotal] = useState<number>(0);
 
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseJobs = await axios.get(`${API.JOB_URL}`);
-        console.log("responseJobs", responseJobs.data.data);
-        setData(responseJobs.data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const responseJobs = await axios.get(`${API.JOB_URL}`);
+      console.log("responseJobs", responseJobs.data.data);
+      setData(responseJobs.data.data);
+      setTotal(responseJobs.data.count);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
+  const fetchPageData = async (page: number) => {
+    try {
+      const responseJobs = await axios.get(`${API.JOB_URL}?page=${page}`);
+      console.log("responseJobs", responseJobs.data.data);
+      setData(responseJobs.data.data);
+      setTotal(responseJobs.data.count);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,19 +76,23 @@ const JobsPosted = () => {
   };
 
   const redirectToCandidate = (item: any) => {
-    navigate(`/candidates`, { state: { itemId: item._id } });
+    navigate(`/jobs-candidates`, { state: { itemId: item._id } });
     console.log("item.id", item._id);
   };
 
   const handleDelete = async () => {
-    // / const deleteJob = await axios.delete(`${API.JOB_URL}/${itemId}`);
     try {
       if (deleteItemId) {
         const deleteJob = await axios.delete(`${API.JOB_URL}/${deleteItemId}`);
         console.log("Deleting item with id:", deleteItemId);
         setDeleteItemId(null);
         setIsModalOpen(false);
-        window.location.reload();
+        toast.success("Job Deleted Successfully", {
+          style: {
+            fontSize: "16px", // Change the font size as per your requirement
+          },
+        });
+        fetchData(); // Refetch data after successful deletion
       } else {
         console.error("No item id found for deletion.");
       }
@@ -90,6 +112,7 @@ const JobsPosted = () => {
       setSearchItem("");
       console.log("fetchData", fetchData);
       setData(fetchData.data.data);
+      setTotal(fetchData.data.data.length);
     } catch (error) {
       console.log(error);
     }
@@ -106,42 +129,9 @@ const JobsPosted = () => {
   return (
     <div>
       <div className={`card`}>
-        {/* Your existing card content */}
-        {/* ... */}
-        {/* New dynamic rendering using state data */}
         <div className="p-10 py-6 pb-10 mt-5 card-body">
           <div className="flex justify-end">
             <div className="flex flex-row gap-6 justify-end space-y-1">
-              {/* <div className="my-1 d-flex align-items-center position-relative">
-                <select
-                  value={selectedLocation}
-                  onChange={handleLocationChange}
-                  data-kt-user-table-filter="search"
-                  className="pl-14 form-select form-select-solid w-150px"
-                >
-                  <option value="">Location</option>
-                  {dummyLocations.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-              {/* <div className="my-1 d-flex align-items-center position-relative">
-                <select
-                  value={selectedLocation}
-                  onChange={handleLocationChange}
-                  data-kt-user-table-filter="search"
-                  className="pl-14 form-select form-select-solid w-150px"
-                >
-                  <option value="">Subject</option>
-                  {dummyLocations.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
               <div className="my-1 d-flex align-items-center position-relative">
                 <KTIcon
                   iconName="magnifier"
@@ -176,8 +166,9 @@ const JobsPosted = () => {
                   <th className="min-w-150px fs-4">Job Title</th>
                   <th className="min-w-140px fs-4">Subject</th>
                   <th className="min-w-120px fs-4">Location</th>
+                  <th className="min-w-120px fs-4">Client</th>
                   <th className="min-w-120px fs-4">Date</th>
-                  <th className="min-w-120px fs-4">Candidates Applied</th>
+                  <th className="min-w-80px fs-4">Candidates Applied</th>
                   <th className="min-w-100px text-end fs-4">Actions</th>
                 </tr>
               </thead>
@@ -185,7 +176,8 @@ const JobsPosted = () => {
                 {data.length > 0 ? (
                   data.map((item: any, index: any) => (
                     <tr key={item.id}>
-                      <td>{index + 1}.</td>
+                      <td>{(page - 1) * limit + (index + 1)}.</td>
+
                       <td>
                         <div className="d-flex align-items-center">
                           <div className="d-flex justify-content-start flex-column">
@@ -207,11 +199,20 @@ const JobsPosted = () => {
                         </a>
                       </td>
 
+                      <td className="">
+                        <div className="d-flex flex-column w-100 me-4">
+                          <div className="mb-2 d-flex flex-stack">
+                            <span className="text-gray-600 me-4 fs-4 fw-bold">
+                              {item.location}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
                       <td className="text-end">
                         <div className="d-flex flex-column w-100 me-2">
                           <div className="mb-2 d-flex flex-stack">
                             <span className="text-gray-600 me-2 fs-4 fw-bold">
-                              {item.location}
+                              {item.client ? item.client : "Client"}
                             </span>
                           </div>
                         </div>
@@ -225,6 +226,7 @@ const JobsPosted = () => {
                           </div>
                         </div>
                       </td>
+
                       <td className="text-end">
                         <div className="d-flex flex-column w-100 ms-15">
                           <div
@@ -246,12 +248,6 @@ const JobsPosted = () => {
                             <i className="bi bi-pencil-square fs-3 bg-f9f9f9 btn-bg-light"></i>
                           </div>
 
-                          <a
-                            href="#"
-                            className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                          >
-                            <i className="bi bi-check-lg fs-3"></i>
-                          </a>
                           <a
                             // onClick={() => handleDeleteBanner(item.id)}
                             onClick={() => {
@@ -283,6 +279,17 @@ const JobsPosted = () => {
             isOpen={isModalOpen}
             onCancel={handleCancel}
             onConfirm={handleDelete}
+          />
+          <PaginationControl
+            page={page}
+            between={4}
+            total={total}
+            limit={limit}
+            changePage={(page) => {
+              setPage(page);
+              fetchPageData(page);
+            }}
+            ellipsis={1}
           />
         </div>
       </div>

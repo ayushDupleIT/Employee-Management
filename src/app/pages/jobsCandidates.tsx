@@ -17,18 +17,18 @@ interface GetAllResponse {
   data: JobData[];
 }
 
-const Candidates = () => {
+const JobsCandidate = () => {
   const [data, setData] = useState([]);
   const location: any = useLocation();
   const { setTitle } = useTitle();
   const [searchItem, setSearchItem] = useState("");
-
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
+  const [itemId, setItemId] = useState<any>("");
 
   useEffect(() => {
-    setTitle("Candidates Page");
+    setTitle("Job Candidates Page");
     console.log("Triggered");
   }, []);
 
@@ -45,12 +45,13 @@ const Candidates = () => {
     try {
       const searchData = { search: searchItem };
       const fetchData = await axios.post(
-        `${API.CANDIDATE_URL}/filterCandidates`,
+        `${API.CANDIDATE_URL}/filterCandidatesForJob/${itemId}`,
         searchData
       );
       setSearchItem("");
       console.log("fetchData", fetchData);
       setData(fetchData.data.data);
+      setTotal(fetchData.data.count);
     } catch (error) {
       console.log(error);
     }
@@ -58,12 +59,12 @@ const Candidates = () => {
 
   const fetchPageData = async (page: number) => {
     try {
-      const responseCandidates = await axios.get(
-        `${API.CANDIDATE_URL}?page=${page}`
+      const responseJobs = await axios.get(
+        `${API.CANDIDATE_URL}/getCandidatesForJob/${itemId}?page=${page}`
       );
-      console.log("responseCandidates", responseCandidates.data.data);
-      setData(responseCandidates.data.data);
-      setTotal(responseCandidates.data.count);
+      console.log("responseJobs", responseJobs.data.data);
+      setData(responseJobs.data.data);
+      setTotal(responseJobs.data.count);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -72,10 +73,28 @@ const Candidates = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const allJobs: any = await getAllJobs();
-        setData(allJobs.data);
-        setTotal(allJobs.count);
-        console.log("ALL JOBS", allJobs);
+        if (location?.state?.itemId) {
+          // Check if "itemId" exists in state
+          const itemId: any = location?.state?.itemId;
+          const fetchJob = async (id: any) => {
+            try {
+              const fetchData: any = await axios.get<JobData>(
+                `${API.CANDIDATE_URL}/getCandidatesForJob/${id}`
+              );
+              setData(fetchData.data.data);
+              setTotal(fetchData.data.count);
+            } catch (error) {
+              console.error("Error fetching job data:", error);
+              // Handle errors if needed
+            }
+          };
+          setItemId(itemId);
+          fetchJob(itemId);
+        } else {
+          const allJobs: any = await getAllJobs();
+          setData(allJobs.data);
+          console.log("ALL JOBS");
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -176,6 +195,7 @@ const Candidates = () => {
                   data.map((item: any, index: any) => (
                     <tr key={item.id}>
                       <td>{(page - 1) * limit + (index + 1)}.</td>
+
                       <td>
                         <div className="d-flex align-items-center">
                           <div className="d-flex justify-content-start flex-column">
@@ -294,4 +314,4 @@ const Candidates = () => {
   );
 };
 
-export default Candidates;
+export default JobsCandidate;

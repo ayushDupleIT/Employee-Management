@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../ApiRoutes";
 import { Editor } from "../component/Editor";
+import toast from "react-hot-toast";
 
 const profileDetailsSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -18,13 +19,13 @@ const EditApplication: React.FC = () => {
   const [data, setData] = useState<any>({});
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   console.log("data ", data);
 
-  const formik :any = useFormik({
+  const formik: any = useFormik({
     initialValues: data,
     validationSchema: profileDetailsSchema,
-    onSubmit: async (values:any) => {
+    onSubmit: async (values: any) => {
       try {
         setLoading(true);
         // Send PATCH request to update the data
@@ -34,7 +35,8 @@ const EditApplication: React.FC = () => {
         );
         console.log("Update response:", response.data);
         setLoading(false);
-        window.location.reload();
+        toast.success('Job Updated Successfully')
+        navigate("/jobs-posted");
       } catch (error) {
         console.error("Error updating job:", error);
         setLoading(false);
@@ -49,7 +51,7 @@ const EditApplication: React.FC = () => {
     // Add other properties here...
   }
 
-  const location :any  = useLocation();
+  const location: any = useLocation();
 
   useEffect(() => {
     if (location?.state?.itemId) {
@@ -57,9 +59,11 @@ const EditApplication: React.FC = () => {
       const itemId: any = location.state.itemId;
       const fetchJob = async (id: any) => {
         try {
-          const fetchData :any = await axios.get<JobData>(`${API.JOB_URL}/${id}`);
+          const fetchData: any = await axios.get<JobData>(
+            `${API.JOB_URL}/${id}`
+          );
           console.log("fetchData", fetchData.data.data);
-          const data :any  = fetchData.data.data;
+          const data: any = fetchData.data.data;
           setData(data);
           formik.setFieldValue("subject", data.subject);
           formik.setFieldValue("title", data.title);
@@ -90,13 +94,11 @@ const EditApplication: React.FC = () => {
     formik.setFieldValue("title", value);
   };
 
-
-
   // Handle changes in location field
-  
+
   console.log("formik.values", formik.values);
   // Handle changes in subject field
-  const handleSubjectChange = (event:any) => {
+  const handleSubjectChange = (event: any) => {
     const subject = event.target.value; // Get the updated subject
     formik.setFieldValue("subject", subject);
   };

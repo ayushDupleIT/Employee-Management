@@ -6,22 +6,27 @@ import { useTitle } from "../routing/TitleProvider";
 import axios from "axios";
 import API from "../ApiRoutes";
 import { Editor } from "../component/Editor";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const profileDetailsSchema = Yup.object().shape({
   title: Yup.string().required("Job Title is required"),
   description: Yup.string().required("Job Description is required"),
   location: Yup.string().required("Location is required"),
   subject: Yup.string().required("Subject is required"),
+  client: Yup.string().required("Client is required"),
 });
 
 const PostJob: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       title: "",
       description: "",
       location: "",
       subject: "",
+      client: "",
     },
     validationSchema: profileDetailsSchema,
     onSubmit: async (values, { setFieldValue }) => {
@@ -33,7 +38,13 @@ const PostJob: React.FC = () => {
         // Handle the response
         console.log("New Job Posted:", response.data);
         setLoading(false);
-        window.location.reload()
+        toast.success("New Job Posted Successfully", {
+          style: {
+            fontSize: "16px", // Change the font size as per your requirement
+          },
+        });
+
+        navigate("/jobs-posted");
       } catch (error) {
         console.error("Error posting job:", error);
         setLoading(false);
@@ -41,7 +52,7 @@ const PostJob: React.FC = () => {
     },
   });
 
-  console.log("formik", formik.errors);
+  console.log(formik.errors)
 
   const { setTitle } = useTitle();
 
@@ -49,7 +60,7 @@ const PostJob: React.FC = () => {
     setTitle("Post new Job");
   }, []);
 
-  const handleEditorChange = (data : any)  => {
+  const handleEditorChange = (data: any) => {
     formik.setFieldValue("description", data); // Update the "description" field in form state
   };
 
@@ -94,7 +105,29 @@ const PostJob: React.FC = () => {
               </div>
             </div>
 
-    
+            <div className="mb-6 row">
+              <label className="col-lg-4 col-form-label required fw-bold fs-6">
+                Client Name
+              </label>
+
+              <div className="col-lg-8">
+                <div className="row">
+                  <div className="col-lg-12 fv-row">
+                    <input
+                      type="text"
+                      className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
+                      placeholder="JP Industries"
+                      {...formik.getFieldProps("client")}
+                    />
+                    {formik.touched.client && formik.errors.client && (
+                      <div className="invalid-feedback">
+                        {formik.errors.client}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className="mb-6 row">
               <label className="col-lg-4 col-form-label fw-bold fs-6">
@@ -142,7 +175,10 @@ const PostJob: React.FC = () => {
               </label>
 
               <div className="col-lg-8 fv-row">
-              <Editor value={formik.values.description} onChange={handleEditorChange} />
+                <Editor
+                  value={formik.values.description}
+                  onChange={handleEditorChange}
+                />
                 {/* <CKEditor
                   editor={ClassicEditor}
                   data=""
@@ -165,7 +201,7 @@ const PostJob: React.FC = () => {
               </div>
             </div>
           </div>
-       
+
           <div className="px-9 py-6 card-footer d-flex justify-content-end">
             <button
               type="submit"
@@ -173,7 +209,7 @@ const PostJob: React.FC = () => {
               disabled={loading}
             >
               {!loading ? (
-                "Post Job"
+                "Submit"
               ) : (
                 <span
                   className="indicator-progress"
