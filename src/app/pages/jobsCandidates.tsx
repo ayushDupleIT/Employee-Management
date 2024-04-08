@@ -7,6 +7,7 @@ import axios from "axios";
 import API from "../ApiRoutes";
 import { useLocation } from "react-router-dom";
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import PdfViewer from "../component/pdfViewer";
 
 interface JobData {
   id: string;
@@ -26,7 +27,10 @@ const JobsCandidate = () => {
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
   const [itemId, setItemId] = useState<any>("");
+  const [pdfFile, setPdfFile] = useState<string>("");
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
 
+  const pdf = "../../../Invoice.pdf";
   useEffect(() => {
     setTitle("Job Candidates Page");
     console.log("Triggered");
@@ -103,6 +107,14 @@ const JobsCandidate = () => {
     fetchData();
   }, [location]);
 
+  const handleViewPdf = (item: any) => {
+    setPdfFile(pdf);
+    setIsPdfViewerOpen(true);
+  };
+
+  const handleClosePdfViewer = () => {
+    setIsPdfViewerOpen(false);
+  };
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, "0");
@@ -254,23 +266,10 @@ const JobsCandidate = () => {
                       </td>
                       <td>
                         <div className="flex-shrink-0 d-flex justify-content-center">
-                          {/* <a
-                          href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                        >
-                          <KTIcon iconName="switch" className="fs-3" />
-                        </a> */}
-                          {/* <a
-                          href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                          data-bs-target='#kt_modal_add_user_form'
-                          onClick={() => setIsModalOpen(true)}
-                        >
-                         <i className="bi bi-eye-fill fs-3"></i>
-                        </a> */}
                           <a
                             href="#"
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                            onClick={() => handleViewPdf(item)}
                           >
                             <i className="bi bi-eye-fill fs-3"></i>
                           </a>
@@ -297,6 +296,9 @@ const JobsCandidate = () => {
               </tbody>
             </table>
           </div>
+          {isPdfViewerOpen && (
+            <PdfViewer url={pdfFile} onClose={handleClosePdfViewer} />
+          )}
           <PaginationControl
             page={page}
             between={4}

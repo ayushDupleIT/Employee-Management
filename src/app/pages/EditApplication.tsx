@@ -13,12 +13,55 @@ const profileDetailsSchema = Yup.object().shape({
   description: Yup.string().required("Description is required"),
   location: Yup.string().required("Location is required"),
   subject: Yup.string().required("Subject is required"),
+  client: Yup.string().required("Client is required"),
 });
+
+const indianStates = [
+  { name: "Andaman and Nicobar Islands" },
+  { name: "Andhra Pradesh" },
+  { name: "Arunachal Pradesh" },
+  { name: "Assam" },
+  { name: "Bihar" },
+  { name: "Chandigarh" },
+  { name: "Chhattisgarh" },
+  { name: "Dadra and Nagar Haveli" },
+  { name: "Daman and Diu" },
+  { name: "Delhi" },
+  { name: "Goa" },
+  { name: "Gujarat" },
+  { name: "Haryana" },
+  { name: "Himachal Pradesh" },
+  { name: "Jammu and Kashmir" },
+  { name: "Jharkhand" },
+  { name: "Karnataka" },
+  { name: "Kerala" },
+  { name: "Ladakh" },
+  { name: "Lakshadweep" },
+  { name: "Madhya Pradesh" },
+  { name: "Maharashtra" },
+  { name: "Manipur" },
+  { name: "Meghalaya" },
+  { name: "Mizoram" },
+  { name: "Nagaland" },
+  { name: "Odisha" },
+  { name: "Puducherry" },
+  { name: "Punjab" },
+  { name: "Rajasthan" },
+  { name: "Sikkim" },
+  { name: "Tamil Nadu" },
+  { name: "Telangana" },
+  { name: "Tripura" },
+  { name: "Uttar Pradesh" },
+  { name: "Uttarakhand" },
+  { name: "West Bengal" },
+];
 
 const EditApplication: React.FC = () => {
   const [data, setData] = useState<any>({});
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [jobLocations, setLocation] = useState<{ name: string }[]>([]);
+
   const navigate = useNavigate();
   console.log("data ", data);
 
@@ -35,7 +78,7 @@ const EditApplication: React.FC = () => {
         );
         console.log("Update response:", response.data);
         setLoading(false);
-        toast.success('Job Updated Successfully')
+        toast.success("Job Updated Successfully");
         navigate("/jobs-posted");
       } catch (error) {
         console.error("Error updating job:", error);
@@ -52,10 +95,9 @@ const EditApplication: React.FC = () => {
   }
 
   const location: any = useLocation();
-
+  console.log("formik errors", formik.errors);
   useEffect(() => {
     if (location?.state?.itemId) {
-      // Check if "itemId" exists in state
       const itemId: any = location.state.itemId;
       const fetchJob = async (id: any) => {
         try {
@@ -68,15 +110,19 @@ const EditApplication: React.FC = () => {
           formik.setFieldValue("subject", data.subject);
           formik.setFieldValue("title", data.title);
           formik.setFieldValue("location", data.location);
+          formik.setFieldValue("client", data.client);
+          formik.setFieldValue("description", data.description);
+
           setSelectedItemId(id);
         } catch (error) {
           console.error("Error fetching job data:", error);
-          // Handle errors if needed
         }
       };
 
       fetchJob(itemId);
     }
+
+    setLocation(indianStates);
   }, [location]);
 
   const formatDate = (dateString: string): string => {
@@ -94,6 +140,10 @@ const EditApplication: React.FC = () => {
     formik.setFieldValue("title", value);
   };
 
+  const handleChangeClient = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    formik.setFieldValue("client", value);
+  };
   // Handle changes in location field
 
   console.log("formik.values", formik.values);
@@ -165,6 +215,35 @@ const EditApplication: React.FC = () => {
             </div>
 
             <div className="mb-6 row">
+              <label className="col-lg-4 col-form-label required fw-bold fs-6">
+                Client Name
+              </label>
+
+              <div className="col-lg-8">
+                <div className="row">
+                  <div className="col-lg-12 fv-row">
+                    <input
+                      type="text"
+                      className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
+                      placeholder="Banking"
+                      onChange={handleChangeClient}
+                      value={formik.values.client || data?.client}
+                      name="client"
+                      // onChange={formik.handleChange}
+                    />
+                    {formik.touched.client && formik.errors.client && (
+                      <div className="fv-plugins-message-container">
+                        <div className="fv-help-block">
+                          {formik.errors.client}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-6 row">
               <label className="col-lg-4 col-form-label fw-bold fs-6">
                 <span className="required">Location</span>
               </label>
@@ -179,18 +258,11 @@ const EditApplication: React.FC = () => {
                   <option selected value="">
                     {data?.location}
                   </option>
-                  <option value="Afghanistan">Afghanistan</option>
-                  <option value="Aland Islands">Aland Islands</option>
-                  <option value="Albania">Albania</option>
-                  <option value="Algeria">Algeria</option>
-                  <option value="American Samoa">American Samoa</option>
-                  <option value="Andorra">Andorra</option>
-                  <option value="Angola">Angola</option>
-                  <option value="Anguilla">Anguilla</option>
-                  <option value="Antarctica">Antarctica</option>
-                  <option value="Antigua and Barbuda">
-                    Antigua and Barbuda
-                  </option>
+                  {jobLocations.map((state, index) => (
+                    <option key={index} value={state.name}>
+                      {state.name}
+                    </option>
+                  ))}
                 </select>
                 {/* Uncomment the following block to display error message if needed */}
                 {/* {formik.touched.country && formik.errors.country && (

@@ -81,26 +81,23 @@ const TablesWidget10: FC<Props> = ({ className, jobs }) => {
                     </a>
                   </td>
                   <td style={{ maxWidth: "160px" }}>
-                    <a   
-                    
-                     dangerouslySetInnerHTML={{ __html: job.description }}
+                    <a
+                      dangerouslySetInnerHTML={{
+                        __html: job.description.replace(/<br\s*\/?>/g, ""),
+                      }} // Replace <br> tags with empty string
                       href="#"
                       className="text-gray-600 text-hover-primary d-block fs-5 ck-p-m"
                       style={{
                         display: "-webkit-box",
-                        WebkitLineClamp: "2",
+                        WebkitLineClamp: "1",
                         overflow: "hidden",
-                       
                         WebkitBoxOrient: "vertical",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
-                        maxHeight: "3.6rem", // Adjust this value to accommodate two lines of text
+                        maxHeight: "2rem", // Adjust this value to accommodate two lines of text
                       }}
-                    >
-                      {/* {job.title} */}
-                    </a>
+                    ></a>
                   </td>
-                 
 
                   <td>
                     <span className="text-gray-600 fs-5 d-block">

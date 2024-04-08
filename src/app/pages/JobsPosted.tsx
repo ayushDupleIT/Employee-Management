@@ -7,10 +7,9 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../ApiRoutes";
-import ConfirmationModal from "./confirmationModal";
 import toast from "react-hot-toast";
-import CustomPagination from "../component/CustomPagination";
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import ConfirmationModal from "../component/confirmationModal";
 
 type DataResponse = {
   _id: number;
@@ -166,8 +165,8 @@ const JobsPosted = () => {
                   <th className="min-w-150px fs-4">Job Title</th>
                   <th className="min-w-140px fs-4">Subject</th>
                   <th className="min-w-120px fs-4">Location</th>
-                  <th className="min-w-120px fs-4">Client</th>
-                  <th className="min-w-120px fs-4">Date</th>
+                  <th className="min-w-100px fs-4">Client</th>
+                  <th className="min-w-180px fs-4">Date</th>
                   <th className="min-w-80px fs-4">Candidates Applied</th>
                   <th className="min-w-100px text-end fs-4">Actions</th>
                 </tr>
@@ -183,7 +182,7 @@ const JobsPosted = () => {
                           <div className="d-flex justify-content-start flex-column">
                             <button
                               // onClick={() => handleLinkClick(item)}
-                              className="text-gray-600 cursor-auto fw-bold fs-4"
+                              className="text-gray-600 cursor-auto fw-bold fs-4 clamp-1"
                             >
                               {item.title}
                             </button>
@@ -193,25 +192,24 @@ const JobsPosted = () => {
                       <td>
                         <a
                           href="#"
-                          className="text-gray-600 cursor-auto fw-bold d-block fs-4"
+                          className="text-gray-600 cursor-auto fw-bold d-block fs-4 clamp-1"
                         >
                           {item.subject}
                         </a>
                       </td>
-
-                      <td className="">
-                        <div className="d-flex flex-column w-100 me-4">
-                          <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 me-4 fs-4 fw-bold">
-                              {item.location}
-                            </span>
-                          </div>
-                        </div>
+                      <td>
+                        <a
+                          href="#"
+                          className="text-gray-600 cursor-auto fw-bold d-block fs-4 clamp-1"
+                        >
+                          {item.location}
+                        </a>
                       </td>
+
                       <td className="text-end">
                         <div className="d-flex flex-column w-100 me-2">
                           <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 me-2 fs-4 fw-bold">
+                            <span className="text-gray-600 fs-4 fw-bold clamp-1">
                               {item.client ? item.client : "Client"}
                             </span>
                           </div>
@@ -220,7 +218,7 @@ const JobsPosted = () => {
                       <td className="text-end">
                         <div className="d-flex flex-column w-100 me-2">
                           <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 me-2 fs-4 fw-bold">
+                            <span className="text-gray-600 me-4 fs-4 fw-bold">
                               {formatDate(item.createdAt)}
                             </span>
                           </div>

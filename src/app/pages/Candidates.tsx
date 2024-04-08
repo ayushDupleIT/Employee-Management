@@ -7,6 +7,8 @@ import axios from "axios";
 import API from "../ApiRoutes";
 import { useLocation } from "react-router-dom";
 import { PaginationControl } from "react-bootstrap-pagination-control";
+import PdfViewer from "../component/pdfViewer";
+import Invoide from "../../../Invoice.pdf";
 
 interface JobData {
   id: string;
@@ -22,10 +24,35 @@ const Candidates = () => {
   const location: any = useLocation();
   const { setTitle } = useTitle();
   const [searchItem, setSearchItem] = useState("");
-
+  const pdf = "../../../Invoice.pdf";
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
+  const [pdfFile, setPdfFile] = useState<string>("");
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
+
+  const handleViewPdf = (item: any) => {
+    setPdfFile(pdf);
+    setIsPdfViewerOpen(true);
+  };
+
+  const handleClosePdfViewer = () => {
+    setIsPdfViewerOpen(false);
+  };
+
+  const handleDownloadPdf = (pdfUrl: string, fileName: string) => {
+    fetch(pdfUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+  };
 
   useEffect(() => {
     setTitle("Candidates Page");
@@ -101,36 +128,6 @@ const Candidates = () => {
         <div className="p-10 py-6 pb-10 mt-5 card-body">
           <div className="flex justify-end">
             <div className="flex flex-row gap-6 justify-end space-y-1">
-              {/* <div className="my-1 d-flex align-items-center position-relative">
-                <select
-                  value={selectedLocation}
-                  onChange={handleLocationChange}
-                  data-kt-user-table-filter="search"
-                  className="pl-14 form-select form-select-solid w-150px"
-                >
-                  <option value="">Location</option>
-                  {dummyLocations.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
-              {/* <div className="my-1 d-flex align-items-center position-relative">
-                <select
-                  value={selectedLocation}
-                  onChange={handleLocationChange}
-                  data-kt-user-table-filter="search"
-                  className="pl-14 form-select form-select-solid w-150px"
-                >
-                  <option value="">Subject</option>
-                  {dummyLocations.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
               <div className="my-1 d-flex align-items-center position-relative">
                 <KTIcon
                   iconName="magnifier"
@@ -161,13 +158,13 @@ const Candidates = () => {
               <thead>
                 <tr className="text-gray-900 fw-bold text-muted">
                   <th className="w-25px fs-4">S.No</th>
-                  <th className="min-w-160px fs-4">Name</th>
-                  <th className="min-w-160px fs-4">Job Title</th>
+                  <th className="min-w-150px fs-4">Name</th>
+                  <th className="min-w-140px fs-4">Job Title</th>
                   <th className="min-w-160px fs-4">Email</th>
-                  <th className="min-w-120px fs-4">Phone No.</th>
+                  <th className="min-w-100px fs-4">Phone No.</th>
                   <th className="min-w-120px fs-4">Client</th>
 
-                  <th className="min-w-80px fs-4">Date of Application</th>
+                  <th className="min-w-80px fs-4">Applied on</th>
                   <th className="min-w-100px text-end fs-4">Actions</th>
                 </tr>
               </thead>
@@ -181,7 +178,7 @@ const Candidates = () => {
                           <div className="d-flex justify-content-start flex-column">
                             <a
                               href="#"
-                              className="text-gray-600 fw-bold text-hover-primary fs-4"
+                              className="text-gray-600 fw-bold text-hover-primary fs-4 clamp-1" 
                             >
                               {item.name}
                             </a>
@@ -191,7 +188,7 @@ const Candidates = () => {
                       <td>
                         <a
                           href="#"
-                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4"
+                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
                         >
                           {item.jobTitle}
                         </a>
@@ -199,14 +196,14 @@ const Candidates = () => {
                       <td className="text-end">
                         <div className="w-60 d-flex flex-column me-2">
                           <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 me-2 fs-4 fw-bold">
+                            <span className="text-gray-600 me-2 fs-4 fw-bold clamp-1">
                               {item.email}
                             </span>
                           </div>
                         </div>
                       </td>
                       <td className="">
-                        <div className="d-flex flex-column w-100 me-2">
+                        <div className="d-flex flex-column">
                           <div className="mb-2 d-flex flex-stack">
                             <span className="text-gray-600 fs-4 fw-bold">
                               {item.phone}
@@ -215,16 +212,16 @@ const Candidates = () => {
                         </div>
                       </td>
                       <td className="">
-                        <div className="d-flex flex-column w-100 me-2">
+                        <div className="d-flex flex-column">
                           <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 fs-4 fw-bold">
+                            <span className="text-gray-600 fs-4 fw-bold line-clamp-1">
                               {item.client ? item.client : "Client"}
                             </span>
                           </div>
                         </div>
                       </td>
                       <td className="">
-                        <div className="d-flex flex-column w-100">
+                        <div className="w-40 d-flex flex-column">
                           <div className="mb-2 d-flex flex-stack">
                             <span className="text-gray-600 fs-4 fw-bold">
                               {formatDate(item.createdAt)}
@@ -234,29 +231,19 @@ const Candidates = () => {
                       </td>
                       <td>
                         <div className="flex-shrink-0 d-flex justify-content-center">
-                          {/* <a
-                          href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                        >
-                          <KTIcon iconName="switch" className="fs-3" />
-                        </a> */}
-                          {/* <a
-                          href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                          data-bs-target='#kt_modal_add_user_form'
-                          onClick={() => setIsModalOpen(true)}
-                        >
-                         <i className="bi bi-eye-fill fs-3"></i>
-                        </a> */}
                           <a
                             href="#"
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                            onClick={() => handleViewPdf(item)}
                           >
                             <i className="bi bi-eye-fill fs-3"></i>
                           </a>
                           <a
                             href="#"
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                            onClick={() =>
+                              handleDownloadPdf(item.resume, "resume")
+                            }
                           >
                             <i className="bi bi-cloud-arrow-down-fill fs-3"></i>
                           </a>
@@ -277,6 +264,9 @@ const Candidates = () => {
               </tbody>
             </table>
           </div>
+          {isPdfViewerOpen && (
+            <PdfViewer url={pdfFile} onClose={handleClosePdfViewer} />
+          )}
           <PaginationControl
             page={page}
             between={4}

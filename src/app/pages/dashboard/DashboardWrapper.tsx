@@ -50,8 +50,8 @@ const DashboardPage = () => {
             className="mb-5 card-xl-stretch mb-xl-0"
             image="media/svg/brand-logos/briefcase-fill.svg"
             time="Total Posted Jobs : "
-            title={jobCount.toString()}
-            description="Pitstop creates quick email campaigns.<br/>We help to strengthen your brand."
+            title={jobCount.toString() || "0"} // Added default value "0" if jobCount is falsy
+            description="Job Admin Dashboard"
           />
         </div>
         <div className="col-xxl-6">
@@ -60,7 +60,7 @@ const DashboardPage = () => {
             image="media/svg/brand-logos/person-lines-fill.svg"
             time="Total Candidates: "
             title={candidatesCount.toString()}
-            description="Keenthemes uses the latest and greatest<br/>frameworks for complete modernization."
+            description="Job Admin Dashboard"
           />
         </div>
       </div>

@@ -8,6 +8,7 @@ import API from "../ApiRoutes";
 import { Editor } from "../component/Editor";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import NewCategoryModal from "../component/NewCategoryModal";
 
 const profileDetailsSchema = Yup.object().shape({
   title: Yup.string().required("Job Title is required"),
@@ -15,10 +16,78 @@ const profileDetailsSchema = Yup.object().shape({
   location: Yup.string().required("Location is required"),
   subject: Yup.string().required("Subject is required"),
   client: Yup.string().required("Client is required"),
+  category: Yup.string().required("Category is required"),
 });
+
+// Dummy location
+
+const indianStates = [
+  { name: "Andaman and Nicobar Islands" },
+  { name: "Andhra Pradesh" },
+  { name: "Arunachal Pradesh" },
+  { name: "Assam" },
+  { name: "Bihar" },
+  { name: "Chandigarh" },
+  { name: "Chhattisgarh" },
+  { name: "Dadra and Nagar Haveli" },
+  { name: "Daman and Diu" },
+  { name: "Delhi" },
+  { name: "Goa" },
+  { name: "Gujarat" },
+  { name: "Haryana" },
+  { name: "Himachal Pradesh" },
+  { name: "Jammu and Kashmir" },
+  { name: "Jharkhand" },
+  { name: "Karnataka" },
+  { name: "Kerala" },
+  { name: "Ladakh" },
+  { name: "Lakshadweep" },
+  { name: "Madhya Pradesh" },
+  { name: "Maharashtra" },
+  { name: "Manipur" },
+  { name: "Meghalaya" },
+  { name: "Mizoram" },
+  { name: "Nagaland" },
+  { name: "Odisha" },
+  { name: "Puducherry" },
+  { name: "Punjab" },
+  { name: "Rajasthan" },
+  { name: "Sikkim" },
+  { name: "Tamil Nadu" },
+  { name: "Telangana" },
+  { name: "Tripura" },
+  { name: "Uttar Pradesh" },
+  { name: "Uttarakhand" },
+  { name: "West Bengal" },
+];
 
 const PostJob: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState<{ name: string }[]>([]);
+  const [categories, setCategories] = useState<
+    { _id: number; category: string }[]
+  >([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const responseCandidates = await axios.get(`${API.cat}`);
+      setCategories(responseCandidates.data.data);
+    } catch (error) {}
+  };
+  useEffect(() => {
+    fetchCategories();
+    setLocation(indianStates);
+  }, []);
+
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -27,20 +96,19 @@ const PostJob: React.FC = () => {
       location: "",
       subject: "",
       client: "",
+      category: "",
     },
     validationSchema: profileDetailsSchema,
     onSubmit: async (values, { setFieldValue }) => {
       setLoading(true);
       try {
         setLoading(true);
-        // Make a POST request to your backend API endpoint
         const response = await axios.post(`${API.JOB_URL}`, values);
-        // Handle the response
         console.log("New Job Posted:", response.data);
         setLoading(false);
         toast.success("New Job Posted Successfully", {
           style: {
-            fontSize: "16px", // Change the font size as per your requirement
+            fontSize: "16px",
           },
         });
 
@@ -52,7 +120,7 @@ const PostJob: React.FC = () => {
     },
   });
 
-  console.log(formik.errors)
+  console.log(formik.errors);
 
   const { setTitle } = useTitle();
 
@@ -104,7 +172,31 @@ const PostJob: React.FC = () => {
                 </div>
               </div>
             </div>
-
+            <div className="mb-6 row">
+              <label className="col-lg-4 col-form-label required fw-bold fs-6">
+                Field
+              </label>
+              <div className="w-full col-lg-7 fv-row d-flex">
+                <select
+                  className="form-select form-select-solid form-select-lg flex-grow-2"
+                  {...formik.getFieldProps("category")}
+                >
+                  <option value="">Select a Category...</option>
+                  {categories.map((category, index) => (
+                    <option key={index} value={category._id}>
+                      {category.category}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  className="btn btn-icon btn-primary"
+                  onClick={handleOpenModal}
+                >
+                  <i className="bi bi-plus"></i>
+                </button>
+              </div>
+            </div>
             <div className="mb-6 row">
               <label className="col-lg-4 col-form-label required fw-bold fs-6">
                 Client Name
@@ -140,9 +232,11 @@ const PostJob: React.FC = () => {
                   {...formik.getFieldProps("location")}
                 >
                   <option value="">Select a Location...</option>
-                  <option value="AF">Afghanistan</option>
-                  <option value="AX">Aland Islands</option>
-                  {/* Other options */}
+                  {location.map((state, index) => (
+                    <option key={index} value={state.name}>
+                      {state.name}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -222,6 +316,7 @@ const PostJob: React.FC = () => {
             </button>
           </div>
         </form>
+        {showModal && <NewCategoryModal onClose={handleCloseModal} />}
       </div>
     </div>
   );

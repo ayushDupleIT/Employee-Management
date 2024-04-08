@@ -1,5 +1,7 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from 'react-router-dom';
+import PdfViewer from "../../../../app/component/pdfViewer";
+
 
 type Candidate = {
   name: string;
@@ -22,6 +24,21 @@ const formatDate = (dateString: string): string => {
 };
 
 const TablesWidget11: FC<Props> = ({ className, candidates }) => {
+  
+  const pdf = "../../../Invoice.pdf";
+  const [pdfFile, setPdfFile] = useState<string>("");
+  const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
+  
+  const handleViewPdf = (item: any) => {
+    setPdfFile(pdf);
+    setIsPdfViewerOpen(true);
+  };
+
+  const handleClosePdfViewer = () => {
+    setIsPdfViewerOpen(false);
+  };
+
+  
   return (
     <div className={`card ${className}`}>
       <div className="flex justify-between pt-5 card-header border-1">
@@ -68,7 +85,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                       <div className="d-flex justify-content-start flex-column">
                         <a
                           href={candidate.resume}
-                          className="text-gray-600 text-hover-primary fs-5"
+                          className="text-gray-600 text-hover-primary fs-5 clamp-1"
                         >
                           {candidate.name}
                         </a>
@@ -90,13 +107,14 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                   </td>
                   <td className="">
                     <a
-                      href={candidate.resume}
+                      href={pdf}
                       className="btn btn-sm btn-light btn-active-light-primary"
                       data-kt-menu-trigger="click"
                       data-kt-menu-placement="bottom-end"
                       style={{ color: "gray" }}
+                      // onClick={() => handleViewPdf(candidate)}
                     >
-                      Download
+                      View 
                     </a>
                   </td>
                 </tr>
