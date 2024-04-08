@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import PdfViewer from "../../../../app/component/pdfViewer";
-
 
 type Candidate = {
   name: string;
@@ -17,18 +16,17 @@ type Props = {
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
 };
 
 const TablesWidget11: FC<Props> = ({ className, candidates }) => {
-  
-  const pdf = "../../../Invoice.pdf";
+  const pdf = "../../../public/Invoice.pdf";
   const [pdfFile, setPdfFile] = useState<string>("");
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
-  
+
   const handleViewPdf = (item: any) => {
     setPdfFile(pdf);
     setIsPdfViewerOpen(true);
@@ -38,16 +36,15 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
     setIsPdfViewerOpen(false);
   };
 
-  
   return (
     <div className={`card ${className}`}>
       <div className="flex justify-between pt-5 card-header border-1">
         <h3 className="card-title align-items-start flex-column">
-        <span
+          <span
             className="mb-1 card-label fw-bolder fs-1"
             style={{ color: "#4c9af3" }}
           >
-           Candidates table
+            Candidates table
           </span>
         </h3>
         <div
@@ -72,7 +69,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
             <thead>
               <tr className="fw-bold text-muted">
                 <th className="text-gray-900 min-w-150px fs-4">Name</th>
-                <th className="text-gray-900 min-w-10px fs-4" >Job Title</th>
+                <th className="text-gray-900 min-w-10px fs-4">Job Title</th>
                 <th className="text-gray-900 min-w-10px fs-4">Applied On</th>
                 <th className="text-gray-900 min-w-80px ms-4 fs-4">Resume</th>
               </tr>
@@ -102,7 +99,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                   </td>
                   <td className="">
                     <span className="text-gray-600 fs-5 d-block">
-                    {formatDate(candidate.createdAt)}
+                      {formatDate(candidate.createdAt)}
                     </span>
                   </td>
                   <td className="">
@@ -114,7 +111,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                       style={{ color: "gray" }}
                       // onClick={() => handleViewPdf(candidate)}
                     >
-                      View 
+                      View
                     </a>
                   </td>
                 </tr>

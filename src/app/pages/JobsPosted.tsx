@@ -13,9 +13,13 @@ import ConfirmationModal from "../component/confirmationModal";
 
 type DataResponse = {
   _id: number;
-  title: string;
+   title: string;
   subject: string;
   location: string;
+  
+  
+
+  
   createdAt: any;
   client: string;
   applicantCount: number;

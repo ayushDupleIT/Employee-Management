@@ -8,7 +8,7 @@ import API from "../ApiRoutes";
 import { useLocation } from "react-router-dom";
 import { PaginationControl } from "react-bootstrap-pagination-control";
 import PdfViewer from "../component/pdfViewer";
-import Invoide from "../../../Invoice.pdf";
+import Invoide from "../../../public/Invoice.pdf";
 
 interface JobData {
   id: string;
@@ -24,7 +24,7 @@ const Candidates = () => {
   const location: any = useLocation();
   const { setTitle } = useTitle();
   const [searchItem, setSearchItem] = useState("");
-  const pdf = "../../../Invoice.pdf";
+  const pdf = "../../../public/Invoice.pdf";
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
@@ -178,7 +178,7 @@ const Candidates = () => {
                           <div className="d-flex justify-content-start flex-column">
                             <a
                               href="#"
-                              className="text-gray-600 fw-bold text-hover-primary fs-4 clamp-1" 
+                              className="text-gray-600 fw-bold text-hover-primary fs-4 clamp-1"
                             >
                               {item.name}
                             </a>
@@ -267,17 +267,19 @@ const Candidates = () => {
           {isPdfViewerOpen && (
             <PdfViewer url={pdfFile} onClose={handleClosePdfViewer} />
           )}
-          <PaginationControl
-            page={page}
-            between={4}
-            total={total}
-            limit={limit}
-            changePage={(page) => {
-              setPage(page);
-              fetchPageData(page);
-            }}
-            ellipsis={1}
-          />
+          <div>
+            <PaginationControl
+              page={page}
+              between={4}
+              total={total}
+              limit={limit}
+              changePage={(page) => {
+                setPage(page);
+                fetchPageData(page);
+              }}
+              ellipsis={1}
+            />
+          </div>
         </div>
       </div>
     </div>

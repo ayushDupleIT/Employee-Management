@@ -30,7 +30,7 @@ const JobsCandidate = () => {
   const [pdfFile, setPdfFile] = useState<string>("");
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
 
-  const pdf = "../../../Invoice.pdf";
+  const pdf = "../../../public/Invoice.pdf";
   useEffect(() => {
     setTitle("Job Candidates Page");
     console.log("Triggered");
@@ -61,6 +61,21 @@ const JobsCandidate = () => {
     }
   };
 
+  const handleDownloadPdf = (pdfUrl: string, fileName: string) => {
+    fetch(pdfUrl)
+      .then((response) => response.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      });
+  };
+
+  
   const fetchPageData = async (page: number) => {
     try {
       const responseJobs = await axios.get(
@@ -198,7 +213,7 @@ const JobsCandidate = () => {
                   <th className="min-w-120px fs-4">Phone No.</th>
                   <th className="min-w-120px fs-4">Client</th>
 
-                  <th className="min-w-80px fs-4">Date of Application</th>
+                  <th className="min-w-80px fs-4">Applied on</th>
                   <th className="min-w-100px text-end fs-4">Actions</th>
                 </tr>
               </thead>
@@ -207,13 +222,12 @@ const JobsCandidate = () => {
                   data.map((item: any, index: any) => (
                     <tr key={item.id}>
                       <td>{(page - 1) * limit + (index + 1)}.</td>
-
                       <td>
                         <div className="d-flex align-items-center">
                           <div className="d-flex justify-content-start flex-column">
                             <a
                               href="#"
-                              className="text-gray-600 fw-bold text-hover-primary fs-4"
+                              className="text-gray-600 fw-bold text-hover-primary fs-4 clamp-1"
                             >
                               {item.name}
                             </a>
@@ -223,40 +237,38 @@ const JobsCandidate = () => {
                       <td>
                         <a
                           href="#"
-                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4"
+                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
                         >
                           {item.jobTitle}
                         </a>
                       </td>
                       <td className="text-end">
-                        <div className="w-60 d-flex flex-column me-2">
-                          <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 me-2 fs-4 fw-bold">
-                              {item.email}
-                            </span>
-                          </div>
-                        </div>
+                      <a
+                          href="#"
+                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
+                        >
+                          {item.email}
+                        </a>
                       </td>
                       <td className="">
-                        <div className="d-flex flex-column w-100 me-2">
-                          <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 fs-4 fw-bold">
-                              {item.phone}
-                            </span>
-                          </div>
-                        </div>
+                      <a
+                          href="#"
+                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
+                        >
+                          {item.phone}
+                        </a>
                       </td>
                       <td className="">
-                        <div className="d-flex flex-column w-100 me-2">
+                        <div className="d-flex flex-column">
                           <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 fs-4 fw-bold">
+                            <span className="text-gray-600 fs-4 fw-bold line-clamp-1">
                               {item.client ? item.client : "Client"}
                             </span>
                           </div>
                         </div>
                       </td>
                       <td className="">
-                        <div className="d-flex flex-column w-100">
+                        <div className="w-40 d-flex flex-column">
                           <div className="mb-2 d-flex flex-stack">
                             <span className="text-gray-600 fs-4 fw-bold">
                               {formatDate(item.createdAt)}
@@ -276,6 +288,9 @@ const JobsCandidate = () => {
                           <a
                             href="#"
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                            onClick={() =>
+                              handleDownloadPdf(item.resume, "resume")
+                            }
                           >
                             <i className="bi bi-cloud-arrow-down-fill fs-3"></i>
                           </a>
