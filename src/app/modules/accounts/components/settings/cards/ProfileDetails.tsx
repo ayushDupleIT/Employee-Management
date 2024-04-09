@@ -479,10 +479,10 @@ const ProfileDetails: React.FC = () => {
                   {...formik.getFieldProps("subject")}
                 >
                   <option value="">Select a subject...</option>
-                  <option value="job_listings">Job Listings</option>
-                  <option value="candidates">Candidates</option>
-                  <option value="applications">Applications</option>
-                  <option value="recruiters">Recruiters</option>
+                  <option value="Job listings">Job Listings</option>
+                  <option value="Candidates">Candidates</option>
+                  <option value="Applications">Applications</option>
+                  <option value="Recruiters">Recruiters</option>
                   {/* <option value="reports">Reports</option> */}
                   {/* Add more subjects as needed */}
                 </select>
