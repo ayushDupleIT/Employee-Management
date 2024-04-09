@@ -82,7 +82,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                       <div className="d-flex justify-content-start flex-column">
                         <a
                           href={candidate.resume}
-                          className="text-gray-600 text-hover-primary fs-5 clamp-1"
+                          className="text-gray-600 text-hover-primary fs-5 clamp-4"
                         >
                           {candidate.name}
                         </a>
@@ -92,7 +92,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                   <td>
                     <a
                       href="#"
-                      className="text-gray-600 text-hover-primary d-block fs-5"
+                      className="text-gray-600 text-hover-primary d-block fs-5 clamp-2"
                     >
                       {candidate.jobTitle}
                     </a>
@@ -104,14 +104,14 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                   </td>
                   <td className="">
                     <a
-                      href={pdf}
+                      href={candidate.resume}
                       className="btn btn-sm btn-light btn-active-light-primary"
                       data-kt-menu-trigger="click"
                       data-kt-menu-placement="bottom-end"
                       style={{ color: "gray" }}
                       // onClick={() => handleViewPdf(candidate)}
                     >
-                      View
+                      Download
                     </a>
                   </td>
                 </tr>

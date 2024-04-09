@@ -20,6 +20,12 @@
   white-space: nowrap;
 }
 
+.clamp-4{
+  max-width: 150px; /* Adjust the max-width as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .clamp-2 {
   max-width: 100px; /* Adjust the max-width as needed */
   overflow: hidden;

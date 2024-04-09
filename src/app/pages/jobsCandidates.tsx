@@ -123,8 +123,18 @@ const JobsCandidate = () => {
   }, [location]);
 
   const handleViewPdf = (item: any) => {
-    setPdfFile(Invoice);
+    setPdfFile(item.resume);
     setIsPdfViewerOpen(true);
+  };
+
+  const handleDownload = (resumeUrl: any) => {
+    // Create a temporary link element
+    const link = document.createElement("a");
+    link.href = resumeUrl;
+    link.download = "resume"; // You can set a default name for the downloaded file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleClosePdfViewer = () => {
@@ -288,9 +298,7 @@ const JobsCandidate = () => {
                           <a
                             href="#"
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                            onClick={() =>
-                              handleDownloadPdf(item.resume, "resume")
-                            }
+                            onClick={() => handleDownload(item.resume)}
                           >
                             <i className="bi bi-cloud-arrow-down-fill fs-3"></i>
                           </a>

@@ -10,7 +10,6 @@ import { PaginationControl } from "react-bootstrap-pagination-control";
 import PdfViewer from "../component/pdfViewer";
 import Invoice from "../../../public/Invoice.pdf";
 
-
 interface JobData {
   id: string;
   // Define other properties as needed
@@ -25,7 +24,6 @@ const Candidates = () => {
   const location: any = useLocation();
   const { setTitle } = useTitle();
   const [searchItem, setSearchItem] = useState("");
-  const pdf = "../../../public/Invoice.pdf";
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
@@ -33,7 +31,7 @@ const Candidates = () => {
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
 
   const handleViewPdf = (item: any) => {
-    setPdfFile(Invoice);
+    setPdfFile(item.resume);
     setIsPdfViewerOpen(true);
   };
 
@@ -41,18 +39,14 @@ const Candidates = () => {
     setIsPdfViewerOpen(false);
   };
 
-  const handleDownloadPdf = (pdfUrl: string, fileName: string) => {
-    fetch(pdfUrl)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-      });
+  const handleDownload = (resumeUrl: any) => {
+    // Create a temporary link element
+    const link = document.createElement("a");
+    link.href = resumeUrl;
+    link.download = "resume"; // You can set a default name for the downloaded file
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   useEffect(() => {
@@ -242,9 +236,7 @@ const Candidates = () => {
                           <a
                             href="#"
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                            onClick={() =>
-                              handleDownloadPdf(item.resume, "resume")
-                            }
+                            onClick={() => handleDownload(item.resume)}
                           >
                             <i className="bi bi-cloud-arrow-down-fill fs-3"></i>
                           </a>
