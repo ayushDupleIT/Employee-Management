@@ -8,7 +8,8 @@ import API from "../ApiRoutes";
 import { useLocation } from "react-router-dom";
 import { PaginationControl } from "react-bootstrap-pagination-control";
 import PdfViewer from "../component/pdfViewer";
-import Invoide from "../../../public/Invoice.pdf";
+import Invoice from "../../../public/Invoice.pdf";
+
 
 interface JobData {
   id: string;
@@ -32,7 +33,7 @@ const Candidates = () => {
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
 
   const handleViewPdf = (item: any) => {
-    setPdfFile(pdf);
+    setPdfFile(Invoice);
     setIsPdfViewerOpen(true);
   };
 

@@ -8,6 +8,7 @@ import API from "../ApiRoutes";
 import { useLocation } from "react-router-dom";
 import { PaginationControl } from "react-bootstrap-pagination-control";
 import PdfViewer from "../component/pdfViewer";
+import Invoice from "../../../public/Invoice.pdf";
 
 interface JobData {
   id: string;
@@ -75,7 +76,6 @@ const JobsCandidate = () => {
       });
   };
 
-  
   const fetchPageData = async (page: number) => {
     try {
       const responseJobs = await axios.get(
@@ -123,7 +123,7 @@ const JobsCandidate = () => {
   }, [location]);
 
   const handleViewPdf = (item: any) => {
-    setPdfFile(pdf);
+    setPdfFile(Invoice);
     setIsPdfViewerOpen(true);
   };
 
@@ -243,7 +243,7 @@ const JobsCandidate = () => {
                         </a>
                       </td>
                       <td className="text-end">
-                      <a
+                        <a
                           href="#"
                           className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
                         >
@@ -251,7 +251,7 @@ const JobsCandidate = () => {
                         </a>
                       </td>
                       <td className="">
-                      <a
+                        <a
                           href="#"
                           className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
                         >
