@@ -120,8 +120,6 @@ const PostJob: React.FC = () => {
     },
   });
 
-  console.log(formik.errors);
-
   const { setTitle } = useTitle();
 
   useEffect(() => {
@@ -132,6 +130,7 @@ const PostJob: React.FC = () => {
     formik.setFieldValue("description", data); // Update the "description" field in form state
   };
 
+  console.log("formik", formik.errors);
   return (
     <div className="mb-5 card mb-xl-10">
       <div
@@ -147,7 +146,7 @@ const PostJob: React.FC = () => {
       </div>
 
       <div id="kt_account_profile_details" className="">
-        <form onSubmit={formik.handleSubmit} noValidate className="form">
+        <form onSubmit={formik.handleSubmit} className="form">
           <div className="p-9 card-body border-top">
             <div className="mb-6 row">
               <label className="col-lg-4 col-form-label required fw-bold fs-6">
@@ -163,40 +162,45 @@ const PostJob: React.FC = () => {
                       placeholder="Software Developer"
                       {...formik.getFieldProps("title")}
                     />
-                    {formik.touched.title && formik.errors.title && (
-                      <div className="invalid-feedback">
-                        {formik.errors.title}
-                      </div>
-                    )}
                   </div>
+                  {formik.touched.title && formik.errors.title && (
+                    <div className="text-red-500">{formik.errors.title}</div>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="mb-6 row">
-              <label className="col-lg-4 col-form-label required fw-bold fs-6">
-                Field
-              </label>
-              <div className="w-full col-lg-7 fv-row d-flex">
-                <select
-                  className="form-select form-select-solid form-select-lg flex-grow-2"
-                  {...formik.getFieldProps("category")}
-                >
-                  <option value="">Select a Category...</option>
-                  {categories.map((category, index) => (
-                    <option key={index} value={category.category}>
-                      {category.category}
-                    </option>
-                  ))}
-                </select>
-                <button
-                  type="button"
-                  className="btn btn-icon btn-primary"
-                  onClick={handleOpenModal}
-                >
-                  <i className="bi bi-plus"></i>
-                </button>
+           
+              <div className="mb-6 row">
+                <label className="col-lg-4 col-form-label required fw-bold fs-6">
+                  Field
+                </label>
+                <div className="w-full col-lg-8 fv-row d-flex flex-column">
+                  <div className="mb-3 d-flex align-items-center">
+                    <select
+                      className="form-select form-select-solid form-select-lg flex-grow-2"
+                      {...formik.getFieldProps("category")}
+                    >
+                      <option value="">Select a Category...</option>
+                      {categories.map((category, index) => (
+                        <option key={index} value={category.category}>
+                          {category.category}
+                        </option>
+                      ))}
+                    </select>
+
+                    <button
+                      type="button"
+                      className="btn btn-icon btn-primary ms-3"
+                      onClick={handleOpenModal}
+                    >
+                      <i className="bi bi-plus fs-1"></i>
+                    </button>
+                  </div>
+                  {formik.touched.category && formik.errors.category && (
+                    <div className="text-red-500">{formik.errors.category}</div>
+                  )}
+                </div>
               </div>
-            </div>
             <div className="mb-6 row">
               <label className="col-lg-4 col-form-label required fw-bold fs-6">
                 Client Name
@@ -211,10 +215,8 @@ const PostJob: React.FC = () => {
                       placeholder="JP Industries"
                       {...formik.getFieldProps("client")}
                     />
-                    {formik.touched.client && formik.errors.client && (
-                      <div className="invalid-feedback">
-                        {formik.errors.client}
-                      </div>
+                    {formik.errors.client && (
+                      <div className="text-red-500">{formik.errors.client}</div>
                     )}
                   </div>
                 </div>
@@ -238,6 +240,9 @@ const PostJob: React.FC = () => {
                     </option>
                   ))}
                 </select>
+                {formik.errors.location && (
+                  <div className="text-red-500">{formik.errors.location}</div>
+                )}
               </div>
             </div>
 
@@ -251,12 +256,14 @@ const PostJob: React.FC = () => {
                   {...formik.getFieldProps("subject")}
                 >
                   <option value="">Select a subject...</option>
-                  <option value="job_listings">Job Listings</option>
-                  <option value="candidates">Candidates</option>
-                  <option value="applications">Applications</option>
-                  <option value="recruiters">Recruiters</option>
+                  <option value="Job listings">Job Listings</option>
+                  <option value="Candidates">Candidates</option>
+                  <option value="Application">Applications</option>
+                  <option value="Recruiters">Recruiters</option>
                 </select>
-
+                {formik.errors.subject && (
+                  <div className="text-red-500">{formik.errors.subject}</div>
+                )}
                 <div className="form-text">
                   Please select a preferred language, including date, time, and
                   number formatting.
@@ -273,22 +280,8 @@ const PostJob: React.FC = () => {
                   value={formik.values.description}
                   onChange={handleEditorChange}
                 />
-                {/* <CKEditor
-                  editor={ClassicEditor}
-                  data=""
-                  onReady={(editor) => {
-                    console.log("Editor is ready to use!", editor);
-                  }}
-                  onChange={handleEditorChange}
-                  onBlur={(event, editor) => {
-                    console.log("Blur.", editor);
-                  }}
-                  onFocus={(event, editor) => {
-                    console.log("Focus.", editor);
-                  }}
-                /> */}
-                {formik.touched.description && formik.errors.description && (
-                  <div className="invalid-feedback">
+                {formik.errors.description && (
+                  <div className="text-red-500">
                     {formik.errors.description}
                   </div>
                 )}
