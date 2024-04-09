@@ -183,7 +183,7 @@ const PostJob: React.FC = () => {
                 >
                   <option value="">Select a Category...</option>
                   {categories.map((category, index) => (
-                    <option key={index} value={category._id}>
+                    <option key={index} value={category.category}>
                       {category.category}
                     </option>
                   ))}

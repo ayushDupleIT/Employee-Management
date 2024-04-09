@@ -57,13 +57,13 @@ export function Login() {
 
   return (
     <form
-      className='form w-100 '
+      className='form w-100'
       onSubmit={formik.handleSubmit}
       noValidate
       id='kt_login_signin_form'
     >
     
-    <div className='separator separator-content my-14 whitespace-nowrap'>
+    <div className='my-14 whitespace-nowrap separator separator-content'>
   <span className='text-gray-600 fw-bolder fs-1'>Job Portal</span>
 </div>
 
@@ -74,17 +74,17 @@ export function Login() {
           <div className='alert-text font-weight-bold'>{formik.status}</div>
         </div>
       ) : (
-        <div className='mb-10 bg-light-info p-8 rounded'>
-          <div className='text-info'>
+        <div className='p-8 mb-10 rounded bg-light-info'>
+          {/* <div className='text-info'>
             Use account <strong>admin@demo.com</strong> and password <strong>demo</strong> to
             continue.
-          </div>
+          </div> */}
         </div>
       )}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-8'>
-        <label className='form-label fs-6 fw-bolder text-gray-900'>Email</label>
+      <div className='mb-8 fv-row'>
+        <label className='text-gray-900 form-label fs-6 fw-bolder'>Email</label>
         <input
           placeholder='Email'
           {...formik.getFieldProps('email')}
@@ -108,8 +108,8 @@ export function Login() {
       {/* end::Form group */}
 
       {/* begin::Form group */}
-      <div className='fv-row mb-3'>
-        <label className='form-label fw-bolder text-gray-900 fs-6 mb-0'>Password</label>
+      <div className='mb-3 fv-row'>
+        <label className='mb-0 text-gray-900 form-label fw-bolder fs-6'>Password</label>
         <input
           type='password'
           autoComplete='off'
@@ -135,19 +135,19 @@ export function Login() {
       {/* end::Form group */}
 
       {/* begin::Wrapper */}
-      <div className='d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8'>
+      <div className='flex-wrap gap-3 mb-8 d-flex flex-stack fs-base fw-semibold'>
         <div />
 
         {/* begin::Link */}
-        <Link to='/auth/forgot-password' className='link-primary'>
+        {/* <Link to='/auth/forgot-password' className='link-primary'>
           Forgot Password ?
-        </Link>
+        </Link> */}
         {/* end::Link */}
       </div>
       {/* end::Wrapper */}
 
       {/* begin::Action */}
-      <div className='d-grid mb-10'>
+      <div className='mb-10 d-grid'>
         <button
           type='submit'
           id='kt_sign_in_submit'
@@ -158,14 +158,14 @@ export function Login() {
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
               Please wait...
-              <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+              <span className='align-middle spinner-border spinner-border-sm ms-2'></span>
             </span>
           )}
         </button>
       </div>
       {/* end::Action */}
 
-      <div className='text-gray-500 text-center fw-semibold fs-6'>
+      <div className='text-center text-gray-500 fw-semibold fs-6'>
         © Job Portal {' '}
         <Link to='/auth/registration' className='link-primary'>
           2024
