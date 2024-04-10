@@ -21,6 +21,8 @@ interface GetAllResponse {
 
 const Candidates = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const location: any = useLocation();
   const { setTitle } = useTitle();
   const [searchItem, setSearchItem] = useState("");
@@ -55,15 +57,19 @@ const Candidates = () => {
   }, []);
 
   const getAllJobs = async (): Promise<GetAllResponse> => {
+    setLoading(true);
     try {
       const response = await axios.get<GetAllResponse>(`${API.CANDIDATE_URL}/`);
       return response.data;
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       throw new Error("Error fetching all jobs: " + error);
     }
   };
 
   const searchJobFromTerm = async () => {
+    setLoading(true);
     try {
       const searchData = { search: searchItem };
       const fetchData = await axios.post(
@@ -71,35 +77,40 @@ const Candidates = () => {
         searchData
       );
       setSearchItem("");
-      console.log("fetchData", fetchData);
+      setLoading(false);
       setData(fetchData.data.data);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
   const fetchPageData = async (page: number) => {
+    setLoading(true);
     try {
       const responseCandidates = await axios.get(
         `${API.CANDIDATE_URL}?page=${page}`
       );
-      console.log("responseCandidates", responseCandidates.data.data);
+      setLoading(false);
       setData(responseCandidates.data.data);
       setTotal(responseCandidates.data.count);
     } catch (error) {
+      setLoading(false);
       console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const allJobs: any = await getAllJobs();
         setData(allJobs.data);
         setTotal(allJobs.count);
-        console.log("ALL JOBS", allJobs);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setLoading(false);
       }
     };
 
@@ -142,8 +153,13 @@ const Candidates = () => {
                   className="p-4 px-6 font-bold rounded cursor-pointer fs-5"
                   style={{ backgroundColor: "#056ee9", color: "#ffffff" }}
                   onClick={searchJobFromTerm}
+                  disabled={loading} // Disable button while loading
                 >
-                  Search
+                  {loading ? (
+                    <span className="align-middle spinner-border spinner-border-sm me-2"></span>
+                  ) : (
+                    "Search"
+                  )}
                 </button>
               </div>
             </div>
@@ -164,7 +180,17 @@ const Candidates = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.length > 0 ? (
+                {loading ? ( // Show loading indicator
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="justify-center text-center p-15 fs-4 fw-bold"
+                    >
+                      Loading...{" "}
+                      <span className="align-middle spinner-border spinner-border-sm me-2"></span>
+                    </td>
+                  </tr>
+                ) : data.length > 0 ? (
                   data.map((item: any, index: any) => (
                     <tr key={item.id}>
                       <td>{(page - 1) * limit + (index + 1)}.</td>

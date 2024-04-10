@@ -65,6 +65,7 @@ const indianStates = [
 
 const JobsPosted = () => {
   const [data, setData] = useState<DataResponse[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const [searchItem, setSearchItem] = useState("");
   const [page, setPage] = useState<number>(1);
@@ -75,13 +76,14 @@ const JobsPosted = () => {
 
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const fetchData = async () => {
+    setLoading(true);
     try {
       const responseJobs = await axios.get(`${API.JOB_URL}`);
-      console.log("responseJobs", responseJobs.data.data);
+      setLoading(false);
       setData(responseJobs.data.data);
       setTotal(responseJobs.data.count);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      setLoading(false);
     }
   };
 
@@ -151,6 +153,7 @@ const JobsPosted = () => {
   };
 
   const searchJobFromTerm = async () => {
+    setLoading(true);
     try {
       const searchData = {
         search: searchItem,
@@ -161,6 +164,7 @@ const JobsPosted = () => {
         `${API.JOB_URL}/search-job`,
         searchData
       );
+      setLoading(false);
       setSearchItem("");
       setSelectedSubject("");
       setSelectedLocation("");
@@ -169,6 +173,7 @@ const JobsPosted = () => {
       setTotal(fetchData.data.data.length);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -235,8 +240,13 @@ const JobsPosted = () => {
                   className="p-4 px-6 font-bold rounded cursor-pointer fs-5"
                   style={{ backgroundColor: "#056ee9", color: "#ffffff" }}
                   onClick={searchJobFromTerm}
+                  disabled={loading} // Disable button while loading
                 >
-                  Search
+                  {loading ? (
+                    <span className="align-middle spinner-border spinner-border-sm me-2"></span>
+                  ) : (
+                    "Search"
+                  )}
                 </button>
               </div>
             </div>
@@ -257,7 +267,16 @@ const JobsPosted = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.length > 0 ? (
+                {loading ? ( // Show loading indicator
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="justify-center text-center p-15 fs-4 fw-bold"
+                    >
+                    Loading... <span className="align-middle spinner-border spinner-border-sm me-2"></span>
+                    </td>
+                  </tr>
+                ) : data.length > 0 ? (
                   data.map((item: any, index: any) => (
                     <tr key={item.id}>
                       <td>{(page - 1) * limit + (index + 1)}.</td>
@@ -346,6 +365,7 @@ const JobsPosted = () => {
                     </tr>
                   ))
                 ) : (
+                  // Show "No Jobs Found" message
                   <tr>
                     <td
                       colSpan={7}

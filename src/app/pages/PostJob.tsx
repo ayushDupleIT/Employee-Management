@@ -104,7 +104,7 @@ const PostJob: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.post(`${API.JOB_URL}`, values);
-        console.log("New Job Posted:", response.data);
+        
         setLoading(false);
         toast.success("New Job Posted Successfully", {
           style: {
