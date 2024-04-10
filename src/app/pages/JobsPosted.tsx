@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { KTIcon, toAbsoluteUrl } from "../../_metronic/helpers";
 import { useTitle } from "../routing/TitleProvider";
-
+import Select from "react-select";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -13,18 +13,55 @@ import ConfirmationModal from "../component/confirmationModal";
 
 type DataResponse = {
   _id: number;
-   title: string;
+  title: string;
   subject: string;
   location: string;
-  
-  
 
-  
   createdAt: any;
   client: string;
   applicantCount: number;
   actions: string;
 };
+
+const indianStates = [
+  { name: "Andaman and Nicobar Islands" },
+  { name: "Andhra Pradesh" },
+  { name: "Arunachal Pradesh" },
+  { name: "Assam" },
+  { name: "Bihar" },
+  { name: "Chandigarh" },
+  { name: "Chhattisgarh" },
+  { name: "Dadra and Nagar Haveli" },
+  { name: "Daman and Diu" },
+  { name: "Delhi" },
+  { name: "Goa" },
+  { name: "Gujarat" },
+  { name: "Haryana" },
+  { name: "Himachal Pradesh" },
+  { name: "Jammu and Kashmir" },
+  { name: "Jharkhand" },
+  { name: "Karnataka" },
+  { name: "Kerala" },
+  { name: "Ladakh" },
+  { name: "Lakshadweep" },
+  { name: "Madhya Pradesh" },
+  { name: "Maharashtra" },
+  { name: "Manipur" },
+  { name: "Meghalaya" },
+  { name: "Mizoram" },
+  { name: "Nagaland" },
+  { name: "Odisha" },
+  { name: "Puducherry" },
+  { name: "Punjab" },
+  { name: "Rajasthan" },
+  { name: "Sikkim" },
+  { name: "Tamil Nadu" },
+  { name: "Telangana" },
+  { name: "Tripura" },
+  { name: "Uttar Pradesh" },
+  { name: "Uttarakhand" },
+  { name: "West Bengal" },
+];
 
 const JobsPosted = () => {
   const [data, setData] = useState<DataResponse[]>([]);
@@ -33,6 +70,8 @@ const JobsPosted = () => {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
   const [total, setTotal] = useState<number>(0);
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState("");
 
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const fetchData = async () => {
@@ -60,7 +99,13 @@ const JobsPosted = () => {
     fetchData();
   }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedLocation(e.target.value);
+  };
 
+  const handleSubjectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSubject(e.target.value);
+  };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -107,12 +152,18 @@ const JobsPosted = () => {
 
   const searchJobFromTerm = async () => {
     try {
-      const searchData = { search: searchItem };
+      const searchData = {
+        search: searchItem,
+        location: selectedLocation,
+        subject: selectedSubject,
+      };
       const fetchData = await axios.post(
         `${API.JOB_URL}/search-job`,
         searchData
       );
       setSearchItem("");
+      setSelectedSubject("");
+      setSelectedLocation("");
       console.log("fetchData", fetchData);
       setData(fetchData.data.data);
       setTotal(fetchData.data.data.length);
@@ -148,6 +199,36 @@ const JobsPosted = () => {
                   value={searchItem}
                   onChange={(e) => setSearchItem(e.target.value)}
                 />
+              </div>
+              <div className="my-1 d-flex align-items-center position-relative">
+                <select
+                  value={selectedSubject}
+                  onChange={handleSubjectChange}
+                  data-kt-user-table-filter="search"
+                  className="pl-14 form-select form-select-solid w-200px"
+                >
+                  <option value="">Select a subject...</option>
+                  <option value="Job listings">Job Listings</option>
+                  <option value="Candidates">Candidates</option>
+                  <option value="Application">Applications</option>
+                  <option value="Recruiters">Recruiters</option>
+                </select>
+              </div>
+
+              <div className="my-1 d-flex align-items-center position-relative">
+                <select
+                  value={selectedLocation}
+                  onChange={handleLocationChange}
+                  data-kt-user-table-filter="search"
+                  className="pl-14 form-select form-select-solid w-200px"
+                >
+                  <option value="">Location</option>
+                  {indianStates.map((state, index) => (
+                    <option key={index} value={state.name}>
+                      {state.name}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
@@ -204,7 +285,7 @@ const JobsPosted = () => {
                       <td>
                         <a
                           href="#"
-                          className="text-gray-600 cursor-auto fw-bold d-block fs-4 clamp-1"
+                          className="text-gray-600 cursor-auto fw-bold d-block fs-4 clamp-2"
                         >
                           {item.location}
                         </a>
@@ -213,7 +294,7 @@ const JobsPosted = () => {
                       <td className="text-end">
                         <div className="d-flex flex-column w-100 me-2">
                           <div className="mb-2 d-flex flex-stack">
-                            <span className="text-gray-600 fs-4 fw-bold clamp-1">
+                            <span className="text-gray-600 fs-4 fw-bold clamp-2">
                               {item.client ? item.client : "Client"}
                             </span>
                           </div>

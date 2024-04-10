@@ -50,7 +50,7 @@ const DashboardPage = () => {
             className="mb-5 card-xl-stretch mb-xl-0"
             image="media/svg/brand-logos/briefcase-fill.svg"
             time="Total Posted Jobs : "
-            title={jobCount.toString() || "0"} // Added default value "0" if jobCount is falsy
+            title={jobCount > 0 ? jobCount.toString() : "0"} // Added default value "0" if jobCount is falsy
             description="Job Admin Dashboard"
           />
         </div>
@@ -59,7 +59,7 @@ const DashboardPage = () => {
             className="mb-5 card-xl-stretch mb-xl-0"
             image="media/svg/brand-logos/person-lines-fill.svg"
             time="Total Candidates: "
-            title={candidatesCount.toString()}
+            title={candidatesCount > 0 ? candidatesCount.toString() : "0"}
             description="Job Admin Dashboard"
           />
         </div>
