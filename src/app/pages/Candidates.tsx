@@ -231,15 +231,15 @@ const Candidates = () => {
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                             onClick={() => handleViewPdf(item)}
                           >
-                            <i className="bi bi-eye-fill fs-3"></i>
+                            <i className="bi-cloud-arrow-down-fill fs-5"></i>
                           </a>
-                          <a
+                          {/* <a
                             href="#"
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                             onClick={() => handleDownload(item.resume)}
                           >
-                            <i className="bi bi-cloud-arrow-down-fill fs-3"></i>
-                          </a>
+                            <i className="bi bi-eye-fill fs-3"></i>
+                          </a> */}
                         </div>
                       </td>
                     </tr>
