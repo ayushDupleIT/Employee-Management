@@ -169,38 +169,38 @@ const PostJob: React.FC = () => {
                 </div>
               </div>
             </div>
-           
-              <div className="mb-6 row">
-                <label className="col-lg-4 col-form-label required fw-bold fs-6">
-                  Field
-                </label>
-                <div className="w-full col-lg-8 fv-row d-flex flex-column">
-                  <div className="mb-3 d-flex align-items-center">
-                    <select
-                      className="form-select form-select-solid form-select-lg flex-grow-2"
-                      {...formik.getFieldProps("category")}
-                    >
-                      <option value="">Select a Category...</option>
-                      {categories.map((category, index) => (
-                        <option key={index} value={category.category}>
-                          {category.category}
-                        </option>
-                      ))}
-                    </select>
 
-                    <button
-                      type="button"
-                      className="btn btn-icon btn-primary ms-3"
-                      onClick={handleOpenModal}
-                    >
-                      <i className="bi bi-plus fs-1"></i>
-                    </button>
-                  </div>
-                  {formik.touched.category && formik.errors.category && (
-                    <div className="text-red-500">{formik.errors.category}</div>
-                  )}
+            <div className="mb-6 row">
+              <label className="col-lg-4 col-form-label required fw-bold fs-6">
+                Field
+              </label>
+              <div className="w-full col-lg-8 fv-row d-flex flex-column">
+                <div className="mb-3 d-flex align-items-center">
+                  <select
+                    className="form-select form-select-solid form-select-lg flex-grow-2"
+                    {...formik.getFieldProps("category")}
+                  >
+                    <option value="">Select a Category...</option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category.category}>
+                        {category.category}
+                      </option>
+                    ))}
+                  </select>
+
+                  <button
+                    type="button"
+                    className="btn btn-icon btn-primary ms-3"
+                    onClick={handleOpenModal}
+                  >
+                    <i className="bi bi-plus fs-1"></i>
+                  </button>
                 </div>
+                {formik.touched.category && formik.errors.category && (
+                  <div className="text-red-500">{formik.errors.category}</div>
+                )}
               </div>
+            </div>
             <div className="mb-6 row">
               <label className="col-lg-4 col-form-label required fw-bold fs-6">
                 Client Name
@@ -276,15 +276,20 @@ const PostJob: React.FC = () => {
               </label>
 
               <div className="col-lg-8 fv-row">
-                <Editor
-                  value={formik.values.description}
-                  onChange={handleEditorChange}
-                />
-                {formik.errors.description && (
-                  <div className="text-red-500">
-                    {formik.errors.description}
-                  </div>
-                )}
+                <div style={{ position: "relative" }}>
+                  <Editor
+                    value={formik.values.description}
+                    onChange={handleEditorChange}
+                  />
+                  {formik.errors.description && (
+                    <div
+                      className="text-red-500"
+                      style={{ position: "absolute", bottom: "-20px", left: 0 }}
+                    >
+                      {formik.errors.description}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
