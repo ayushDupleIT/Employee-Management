@@ -273,7 +273,8 @@ const JobsPosted = () => {
                       colSpan={7}
                       className="justify-center text-center p-15 fs-4 fw-bold"
                     >
-                    Loading... <span className="align-middle spinner-border spinner-border-sm me-2"></span>
+                      Loading...{" "}
+                      <span className="align-middle spinner-border spinner-border-sm me-2"></span>
                     </td>
                   </tr>
                 ) : data.length > 0 ? (

@@ -85,14 +85,15 @@ const HeaderToolbar = () => {
         <DefaultTitle />
         <div className="overflow-auto pt-3 d-flex align-items-stretch pt-lg-0">
           {/* Notifications button */}
-          <button
+          {/* <button
             className="p-4 px-6 mx-4 font-bold bg-gray-200 rounded cursor-pointer fs-5"
             onClick={toggleNotifications}
           >
             <i className="pr-3 justify-content-lg-between bi bi-bell-fill fs-3"></i>
             Notifications
           </button>
-          {isNotificationsOpen && <NotificationsContainer notifications={notifications} />} {/* Render NotificationsContainer if isNotificationsOpen is true */}
+          {isNotificationsOpen && <NotificationsContainer notifications={notifications} />}  */}
+          {/* Render NotificationsContainer if isNotificationsOpen is true */}
           {/* Logout button */}
           <button
             className="p-4 px-6 font-bold bg-gray-200 rounded fs-5"

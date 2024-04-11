@@ -93,7 +93,7 @@ const JobsCandidate = () => {
     const fetchData = async () => {
       try {
         if (location?.state?.itemId) {
-          // Check if "itemId" exists in state
+          // Check if "itemId" exists in stat
           const itemId: any = location?.state?.itemId;
           const fetchJob = async (id: any) => {
             try {
@@ -289,9 +289,9 @@ const JobsCandidate = () => {
                       <td>
                         <div className="flex-shrink-0 d-flex justify-content-center">
                           <a
-                            href="#"
+                            href={item.resume}
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                            onClick={() => handleViewPdf(item)}
+                            // onClick={() => handleViewPdf(item)}
                           >
                             <i className="bi-cloud-arrow-down-fill fs-5"></i>
                           </a>

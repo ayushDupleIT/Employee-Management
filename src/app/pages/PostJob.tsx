@@ -10,6 +10,12 @@ import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import NewCategoryModal from "../component/NewCategoryModal";
 
+interface Location {
+  city: string;
+  state: string;
+  country: string;
+}
+
 const profileDetailsSchema = Yup.object().shape({
   title: Yup.string().required("Job Title is required"),
   description: Yup.string().required("Job Description is required"),
@@ -63,7 +69,8 @@ const indianStates = [
 
 const PostJob: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState<{ name: string }[]>([]);
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [subjects, setSubjects] = useState<{ subject: string }[]>([]);
   const [categories, setCategories] = useState<
     { _id: number; category: string }[]
   >([]);
@@ -83,9 +90,26 @@ const PostJob: React.FC = () => {
       setCategories(responseCandidates.data.data);
     } catch (error) {}
   };
+
+  const fetchSubjects = async () => {
+    try {
+      const subjects = await axios.get(API.subject);
+      setSubjects(subjects.data.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const fetchLocation = async () => {
+    try {
+      const locations = await axios.get(API.location);
+      setLocations(locations.data.data);
+    } catch (error) {}
+  };
   useEffect(() => {
     fetchCategories();
-    setLocation(indianStates);
+    fetchSubjects();
+    fetchLocation();
   }, []);
 
   const navigate = useNavigate();
@@ -104,7 +128,7 @@ const PostJob: React.FC = () => {
       try {
         setLoading(true);
         const response = await axios.post(`${API.JOB_URL}`, values);
-        
+
         setLoading(false);
         toast.success("New Job Posted Successfully", {
           style: {
@@ -234,9 +258,12 @@ const PostJob: React.FC = () => {
                   {...formik.getFieldProps("location")}
                 >
                   <option value="">Select a Location...</option>
-                  {location.map((state, index) => (
-                    <option key={index} value={state.name}>
-                      {state.name}
+                  {locations.map((location, index) => (
+                    <option
+                      key={index}
+                      value={`${location.city}, ${location.state}, ${location.country}`}
+                    >
+                      {location.city}, {location.state}, {location.country}
                     </option>
                   ))}
                 </select>
@@ -256,10 +283,11 @@ const PostJob: React.FC = () => {
                   {...formik.getFieldProps("subject")}
                 >
                   <option value="">Select a subject...</option>
-                  <option value="Job listings">Job Listings</option>
-                  <option value="Candidates">Candidates</option>
-                  <option value="Application">Applications</option>
-                  <option value="Recruiters">Recruiters</option>
+                  {subjects.map((item, index) => (
+                    <option key={index} value={item.subject}>
+                      {item.subject}
+                    </option>
+                  ))}
                 </select>
                 {formik.errors.subject && (
                   <div className="text-red-500">{formik.errors.subject}</div>

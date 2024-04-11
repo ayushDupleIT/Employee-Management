@@ -253,9 +253,9 @@ const Candidates = () => {
                       <td>
                         <div className="flex-shrink-0 d-flex justify-content-center">
                           <a
-                            href="#"
+                            href={item.resume}
                             className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                            onClick={() => handleViewPdf(item)}
+                            // onClick={() => handleViewPdf(item)}
                           >
                             <i className="bi-cloud-arrow-down-fill fs-5"></i>
                           </a>
