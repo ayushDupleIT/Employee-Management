@@ -261,9 +261,13 @@ const PostJob: React.FC = () => {
                   {locations.map((location, index) => (
                     <option
                       key={index}
-                      value={`${location.city}, ${location.state}, ${location.country}`}
+                      value={`${location.city}, ${
+                        location.state ? location.state + ", " : ""
+                      }${location.country}`}
                     >
-                      {location.city}, {location.state}, {location.country}
+                      {location.city}
+                      {location.state ? `, ${location.state}` : ""},{" "}
+                      {location.country}
                     </option>
                   ))}
                 </select>
