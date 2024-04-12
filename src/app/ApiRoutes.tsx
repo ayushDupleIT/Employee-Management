@@ -4,12 +4,12 @@
 // const SUBJECT_URL = "http://localhost:8080/subject/";
 // const LOCATION_URL = "http://localhost:8080/location/";
 
-const JOB_URL = "http://jobs.dupleit.com:8080/job/";
-const CANDIDATE_URL = "http://jobs.dupleit.com:8080/candidate/";
-const SUBJECT_URL = "http://jobs.dupleit.com:8080/subject/";
-const LOCATION_URL = "http://jobs.dupleit.com:8080/location/";
-const CAT_URL = "http://jobs.dupleit.com:8080/cat/";
-const AWS_S3 = "http://jobs.dupleit.com:8080/aws-s3/image-upload/";
+const JOB_URL = "https://jobs.dupleit.com:8080/job/";
+const CANDIDATE_URL = "https://jobs.dupleit.com:8080/candidate/";
+const SUBJECT_URL = "https://jobs.dupleit.com:8080/subject/";
+const LOCATION_URL = "https://jobs.dupleit.com:8080/location/";
+const CAT_URL = "https://jobs.dupleit.com:8080/cat/";
+const AWS_S3 = "https://jobs.dupleit.com:8080/aws-s3/image-upload/";
 
 const API = {
   // Jobs
