@@ -35,6 +35,7 @@ const AppRoutes: FC = () => {
               <Route index element={<Navigate to="/candidates" />} />
               <Route index element={<Navigate to="/subject" />} />
               <Route index element={<Navigate to="/location" />} />
+              <Route index element={<Navigate to="/category" />} />
               <Route index element={<Navigate to="/post-a-job" />} />
               <Route index element={<Navigate to="/jobs-candidates" />} />
             </>

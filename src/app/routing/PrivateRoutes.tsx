@@ -14,6 +14,7 @@ import Location from "../pages/Location";
 import EditApplication from "../pages/EditApplication";
 import { PostJob } from "../pages/PostJob";
 import JobsCandidate from "../pages/jobsCandidates";
+import Category from "../pages/category";
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
@@ -36,6 +37,7 @@ const PrivateRoutes = () => {
         <Route path="candidates" element={<Candidates />} />
         <Route path="subject" element={<Subject />} />
         <Route path="location" element={<Location />} />
+        <Route path="category" element={<Category />} />
         <Route path="editapplication" element={<EditApplication />} />
         <Route path="jobs-candidates" element={<JobsCandidate />} />
         <Route path="post-a-job" element={<PostJob />} />

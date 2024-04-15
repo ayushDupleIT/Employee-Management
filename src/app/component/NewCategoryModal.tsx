@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import API from "../ApiRoutes";
 import axios from "axios";
 import toast from "react-hot-toast";
-const NewCategoryModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+
+interface Props {
+  onClose: () => void;
+  fetchCategories: () => void;
+}
+
+const NewCategoryModal: React.FC<Props> = ({ onClose, fetchCategories }) => {
   const [categoryName, setCategoryName] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -20,6 +26,7 @@ const NewCategoryModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       onClose();
       // Reset the category name input
       setCategoryName("");
+      fetchCategories();
     } catch (error) {
       console.error("Error creating category:", error);
       // Handle error appropriately, e.g., show error message to user

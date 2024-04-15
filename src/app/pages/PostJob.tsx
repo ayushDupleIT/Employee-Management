@@ -212,13 +212,13 @@ const PostJob: React.FC = () => {
                     ))}
                   </select>
 
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-icon btn-primary ms-3"
                     onClick={handleOpenModal}
                   >
                     <i className="bi bi-plus fs-1"></i>
-                  </button>
+                  </button> */}
                 </div>
                 {formik.touched.category && formik.errors.category && (
                   <div className="text-red-500">{formik.errors.category}</div>
@@ -346,7 +346,6 @@ const PostJob: React.FC = () => {
             </button>
           </div>
         </form>
-        {showModal && <NewCategoryModal onClose={handleCloseModal} />}
       </div>
     </div>
   );

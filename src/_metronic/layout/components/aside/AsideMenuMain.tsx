@@ -52,6 +52,12 @@ export function AsideMenuMain() {
         // icon="gift"
         fontIcon="bi-geo-alt-fill"
       />
+      <AsideMenuItem
+        to="/category"
+        title="Category"
+        // icon="gift"
+        fontIcon="bi bi-list-ul"
+      />
     
     </>
   );
