@@ -12,6 +12,7 @@ import { TitleProvider, useTitle } from "../../../../app/routing/TitleProvider";
 import NotificationsContainer from "./NotificationsContainer"; // Import NotificationsContainer
 import API from "../../../../app/ApiRoutes";
 import axios from "axios";
+import LogOut from "../../../../app/component/logOut";
 
 const HeaderToolbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -28,20 +29,23 @@ const HeaderToolbar = () => {
   const { classes } = useLayout();
   const [status, setStatus] = useState<string>("1");
   const { currentUser, logout } = useAuth();
-  const [notifications, setIsNotifications] = useState([])
+  const [notifications, setIsNotifications] = useState([]);
+  const [modal, setModal] = useState(false);
 
   const fetchNotifications = async () => {
-    try{
-      const response:any = await axios.get(`${API.CANDIDATE_URL}/job/getNotifications`);
+    try {
+      const response: any = await axios.get(
+        `${API.CANDIDATE_URL}/job/getNotifications`
+      );
       // console.log("response", response.data.notifications)
-      setIsNotifications(response.data.notifications.slice(0, 5))
+      setIsNotifications(response.data.notifications.slice(0, 5));
       // console.log(response.data.notifications)
-    }catch(error){
-      console.log('error', error)
+    } catch (error) {
+      console.log("error", error);
     }
-  }
+  };
   useEffect(() => {
-    fetchNotifications()
+    fetchNotifications();
     const slider: target = document.querySelector(
       "#kt_toolbar_slider"
     ) as target;
@@ -96,13 +100,21 @@ const HeaderToolbar = () => {
           {/* Render NotificationsContainer if isNotificationsOpen is true */}
           {/* Logout button */}
           <button
-            className="p-4 px-6 font-bold bg-gray-200 rounded fs-5"
-            onClick={logout}
-          ><i className="pr-3 justify-content-lg-between bi bi-box-arrow-in-right fs-3"></i>
+            className="gap-3 p-4 px-6 font-bold bg-gray-200 rounded fs-5 btn btn-active-primary"
+            onClick={() => setModal(true)}
+          >
+            <i className="pr-3 font-bold justify-content-lg-between bi bi-box-arrow-in-right fs-2"></i>
             Log out
           </button>
         </div>
         {/* end::Toolbar container */}
+        {modal && (
+          <LogOut
+            isOpen={modal}
+            onCancel={() => setModal(false)}
+            onConfirm={logout}
+          />
+        )}
       </div>
     </div>
   );

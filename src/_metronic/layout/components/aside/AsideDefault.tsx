@@ -24,7 +24,7 @@ const AsideDefault: FC = () => {
       data-kt-drawer-toggle='#kt_aside_mobile_toggle'
     >
  
-      <div style={{ backgroundColor: 'rgb(33 56 79)' }} className='aside-menu flex-column-fluid' >
+      <div style={{ backgroundColor: '#2d322c' }} className='aside-menu flex-column-fluid' >
         <AsideMenu asideMenuCSSClasses={classes.asideMenu} />
       </div>
       {/**style={{ backgroundColor: '#3380BA' }} */}

@@ -54,7 +54,6 @@ const Subject = () => {
       handleDelete(deleteItemId);
       setIsModalOpen(false); // Close the modal after confirming deletion
     }
-  
   };
   useEffect(() => {
     setTitle("Subject Page");
@@ -72,8 +71,8 @@ const Subject = () => {
             <div className="flex flex-row gap-6 justify-start space-y-1">
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
-                  className="p-4 px-6 mt-6 font-bold bg-red-600 rounded cursor-pointer fs-6 hover:bg-green-600"
-                  style={{  color: "#ffffff" }}
+                  className="p-4 px-6 mt-6 font-bold bg-green-600 rounded cursor-pointer fs-6 hover:bg-red-600 btn btn-primary" 
+                  style={{ color: "#ffffff" }}
                   onClick={handleOpenModal}
                 >
                   Add Subject {/* Use bi-plus-lg for larger size */}
@@ -85,8 +84,8 @@ const Subject = () => {
             <table className="table align-middle table-row-dashed table-row-gray-300 gs-0 gy-4">
               <thead>
                 <tr className="text-gray-900 fw-bold text-muted">
-                  <th className="w-25px fs-4">S.No</th>
-                  <th className="min-w-150px fs-4">Subject</th>
+                  <th className="w-500px fs-4">S.No</th>
+                  <th className="min-w-150px ms-5 fs-4">Subject</th>
                   <th className="min-w-100px text-end fs-4">Action</th>
                 </tr>
               </thead>
@@ -127,7 +126,12 @@ const Subject = () => {
             </table>
           </div>
         </div>
-        {showModal && <SubjectModal fetchSubjects={fetchSubjects} onClose={handleCloseModal} />}
+        {showModal && (
+          <SubjectModal
+            fetchSubjects={fetchSubjects}
+            onClose={handleCloseModal}
+          />
+        )}
 
         <ConfirmationModal
           isOpen={isModalOpen}

@@ -42,7 +42,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
         <h3 className="card-title align-items-start flex-column">
           <span
             className="mb-1 card-label fw-bolder fs-1"
-            style={{ color: "rgb(33 56 79)" }}
+            style={{ color: "#2d322c" }}
             // style={{ color: "#4c9af3" }}
           >
             Candidates table

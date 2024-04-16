@@ -11,7 +11,7 @@ $coal-100:  #15171C !default;
 $coal-200:  #13141A !default;
 $coal-300:  #111217 !default;
 $coal-400:  #0F1014 !default;
-$coal-500:  #0D0E12 !default;
+$coal-500:  #2d322c !default;
 $coal-600:  #0B0C10 !default;
 $coal-black: #000000 !default;
 $coal-clarity:  rgba(#18191F, 50) !default;
@@ -48,9 +48,13 @@ $grays: (
 	"900": $gray-900
 ) !default; 
 
+.hover-bg-green-400 {
+	background-color: rgba(104, 189, 71, 1); // Define your desired RGBA color value here
+  }
+  
 // Bootstrap contextual colors
 // Primary colors
-$primary:						green;//#6583a1 !default;;
+$primary:						#68bd47;//#6583a1 !default;;
 $primary-active:				#536475  !default;
 $primary-light: 				#E9F3FF !default;
 $primary-clarity: 				rgba(#1B84FF, 0.2) !default;

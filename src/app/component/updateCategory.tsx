@@ -35,7 +35,7 @@ const UpdateCat: React.FC<Props> = ({ onClose, fetchCategories, item }) => {
   };
 
   return (
-    <div className="overflow-y-auto fixed inset-0 z-10">
+    <div className="flex overflow-y-auto fixed inset-0 z-10 justify-center items-center">
       <div className="flex justify-center items-center px-4 pt-4 pb-20">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -74,7 +74,7 @@ const UpdateCat: React.FC<Props> = ({ onClose, fetchCategories, item }) => {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-6 py-3 mr-5 text-base font-medium text-white bg-red-600 rounded-md border border-transparent shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
+                  className="inline-flex justify-center px-6 py-3 mr-5 text-base font-medium text-white bg-green-600 rounded-md border border-transparent shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
                 >
                   Create
                 </button>

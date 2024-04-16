@@ -133,7 +133,7 @@ const Candidates = () => {
         {/* New dynamic rendering using state data */}
         <div className="p-10 py-6 pb-10 mt-5 card-body">
           <div className="flex justify-end">
-            <div className="flex flex-row gap-6 justify-end space-y-1">
+            <div className="flex flex-row flex-wrap gap-6 justify-end space-y-1">
               <div className="my-1 d-flex align-items-center position-relative">
                 <KTIcon
                   iconName="magnifier"
@@ -151,7 +151,7 @@ const Candidates = () => {
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
                   className="p-4 px-6 font-bold rounded cursor-pointer bg-primary fs-5"
-                  style={{color: "#ffffff" }}
+                  style={{ color: "#ffffff" }}
                   onClick={searchJobFromTerm}
                   disabled={loading} // Disable button while loading
                 >

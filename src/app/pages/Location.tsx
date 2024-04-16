@@ -66,7 +66,7 @@ const Location = () => {
             <div className="flex flex-row gap-6 justify-start space-y-1">
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
-                  className="p-4 px-6 mt-6 font-bold bg-red-600 rounded cursor-pointer fs-6 hover:bg-green-600" 
+                  className="p-4 px-6 mt-6 font-bold bg-green-600 rounded cursor-pointer fs-6 hover:bg-red-600 btn btn-primary"
                   style={{ color: "#ffffff" }}
                   onClick={handleOpenModal}
                 >
@@ -80,9 +80,9 @@ const Location = () => {
               <thead>
                 <tr className="text-gray-900 fw-bold text-muted">
                   <th className="w-25px fs-4">S.No</th>
-                  <th className="min-w-150px fs-4">City</th>
-                  <th className="min-w-140px fs-4">State</th>
-                  <th className="min-w-120px fs-4">Country</th>
+                  <th className="w-400px fs-4">City</th>
+                  <th className="min-w-140px w-400px fs-4">State</th>
+                  <th className="min-w-120px w-400px fs-4">Country</th>
                   <th className="min-w-100px text-end fs-4">Action</th>
                 </tr>
               </thead>

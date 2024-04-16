@@ -33,7 +33,7 @@ const NewCategoryModal: React.FC<Props> = ({ onClose, fetchCategories }) => {
     }
   };
   return (
-    <div className="overflow-y-auto fixed inset-0 z-10">
+    <div className="flex overflow-y-auto fixed inset-0 z-10 justify-center items-center">
       <div className="flex justify-center items-center px-4 pt-4 pb-20">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -46,7 +46,7 @@ const NewCategoryModal: React.FC<Props> = ({ onClose, fetchCategories }) => {
           &#8203;
         </span>
 
-        <div className="inline-block overflow-hidden text-left align-bottom bg-white rounded-lg shadow-xl transition-all transform sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div className="inline-block overflow-hidden text-left align-bottom bg-white rounded-lg shadow-xl transition-all transform sm:my-8 sm:align-middle sm:max-w-lg sm:w-full md:max-w-xl lg:max-w-2xl">
           <form onSubmit={handleSubmit}>
             <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
@@ -72,7 +72,7 @@ const NewCategoryModal: React.FC<Props> = ({ onClose, fetchCategories }) => {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-6 py-3 mr-5 text-base font-medium text-white bg-red-600 rounded-md border border-transparent shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
+                  className="inline-flex justify-center px-6 py-3 mr-5 text-base font-medium text-white rounded-md border border-transparent shadow-sm bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
                 >
                   Create
                 </button>

@@ -22,7 +22,11 @@ type DataResponse = {
   applicantCount: number;
   actions: string;
 };
-
+interface Location {
+  city: string;
+  state: string;
+  country: string;
+}
 const indianStates = [
   { name: "Andaman and Nicobar Islands" },
   { name: "Andhra Pradesh" },
@@ -73,6 +77,7 @@ const JobsPosted = () => {
   const [total, setTotal] = useState<number>(0);
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
+  const [locations, setLocations] = useState<Location[]>([]);
 
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
   const fetchData = async () => {
@@ -113,9 +118,15 @@ const JobsPosted = () => {
   };
   const { setTitle } = useTitle();
 
+  const fetchLocation = async () => {
+    try {
+      const locations = await axios.get(API.location);
+      setLocations(locations.data.data);
+    } catch (error) {}
+  };
   useEffect(() => {
     setTitle("Jobs Posted");
-    console.log("Triggered");
+    fetchLocation();
   }, []);
 
   const navigate = useNavigate();
@@ -190,7 +201,7 @@ const JobsPosted = () => {
       <div className={`card`}>
         <div className="p-10 py-6 pb-10 mt-5 card-body">
           <div className="flex justify-end">
-            <div className="flex flex-row gap-6 justify-end space-y-1">
+            <div className="flex flex-row flex-wrap gap-6 justify-end space-y-1">
               <div className="my-1 d-flex align-items-center position-relative">
                 <KTIcon
                   iconName="magnifier"
@@ -210,7 +221,7 @@ const JobsPosted = () => {
                   value={selectedSubject}
                   onChange={handleSubjectChange}
                   data-kt-user-table-filter="search"
-                  className="pl-14 form-select form-select-solid w-200px"
+                  className="pl-14 form-select form-select-solid w-300px"
                 >
                   <option value="">Select a subject...</option>
                   <option value="Job listings">Job Listings</option>
@@ -225,12 +236,19 @@ const JobsPosted = () => {
                   value={selectedLocation}
                   onChange={handleLocationChange}
                   data-kt-user-table-filter="search"
-                  className="pl-14 form-select form-select-solid w-200px"
+                  className="pl-14 form-select form-select-solid w-300px"
                 >
                   <option value="">Location</option>
-                  {indianStates.map((state, index) => (
-                    <option key={index} value={state.name}>
-                      {state.name}
+                  {locations.map((location, index) => (
+                    <option
+                      key={index}
+                      value={`${location.city}, ${
+                        location.state ? location.state + ", " : ""
+                      }${location.country}`}
+                    >
+                      {location.city}
+                      {location.state ? `, ${location.state}` : ""},{" "}
+                      {location.country}
                     </option>
                   ))}
                 </select>
