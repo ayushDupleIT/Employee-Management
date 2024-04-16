@@ -150,8 +150,8 @@ const Candidates = () => {
               </div>
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
-                  className="p-4 px-6 font-bold rounded cursor-pointer fs-5"
-                  style={{ backgroundColor: "#056ee9", color: "#ffffff" }}
+                  className="p-4 px-6 font-bold rounded cursor-pointer bg-primary fs-5"
+                  style={{color: "#ffffff" }}
                   onClick={searchJobFromTerm}
                   disabled={loading} // Disable button while loading
                 >

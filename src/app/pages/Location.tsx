@@ -66,8 +66,8 @@ const Location = () => {
             <div className="flex flex-row gap-6 justify-start space-y-1">
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
-                  className="p-4 px-6 mt-6 font-bold rounded cursor-pointer fs-6"
-                  style={{ backgroundColor: "#dc2626", color: "#ffffff" }}
+                  className="p-4 px-6 mt-6 font-bold bg-red-600 rounded cursor-pointer fs-6 hover:bg-green-600" 
+                  style={{ color: "#ffffff" }}
                   onClick={handleOpenModal}
                 >
                   Add Location {/* Use bi-plus-lg for larger size */}
@@ -131,7 +131,7 @@ const Location = () => {
 
                         <a
                           href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                          className="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
                           onClick={() => {
                             setDeleteItemId(item._id); // Set the deleteItemId when the delete button is clicked
                             setIsModalOpen(true); // Open the modal

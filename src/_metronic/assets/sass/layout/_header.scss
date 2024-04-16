@@ -9,14 +9,14 @@
 		justify-content: space-between;
 		align-items: center;
 		// background-color: get($aside-config, bg-color);
-		background-color: red;
+		// background-color: red;
 	}
 }
 
 // Desktop mode
 @include media-breakpoint-up(lg) {
 	.header {
-		background-color: red;
+		// background-color: red;
 		display: flex;
 		align-items: center;
 		position: fixed;
@@ -32,7 +32,7 @@
 
 		// Brand
 		.header-brand {			
-			background-color: #003366;
+			background-color: rgb(33 56 79);
 			height: get($header-config, height, desktop);
 			padding: 0 get($aside-config, padding-x);
 			width: get($aside-config, width);

@@ -16,6 +16,7 @@ import { PostJob } from "../pages/PostJob";
 import JobsCandidate from "../pages/jobsCandidates";
 import Category from "../pages/category";
 
+
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import("../modules/profile/ProfilePage"));
   const WizardsPage = lazy(() => import("../modules/wizards/WizardsPage"));

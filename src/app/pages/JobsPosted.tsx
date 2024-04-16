@@ -237,8 +237,8 @@ const JobsPosted = () => {
               </div>
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
-                  className="p-4 px-6 font-bold rounded cursor-pointer fs-5"
-                  style={{ backgroundColor: "#056ee9", color: "#ffffff" }}
+                  className="p-4 px-6 font-bold rounded cursor-pointer bg-primary fs-5 hover:bg-green-600"
+                  style={{ color: "#ffffff" }}
                   onClick={searchJobFromTerm}
                   disabled={loading} // Disable button while loading
                 >
@@ -287,7 +287,7 @@ const JobsPosted = () => {
                           <div className="d-flex justify-content-start flex-column">
                             <button
                               // onClick={() => handleLinkClick(item)}
-                              className="text-gray-600 cursor-auto fw-bold fs-4 clamp-1"
+                              className="text-gray-600 cursor-default fw-bold fs-4 clamp-1"
                             >
                               {item.title}
                             </button>
@@ -336,7 +336,7 @@ const JobsPosted = () => {
                             className="mb-2 d-flex flex-stack"
                             onClick={() => redirectToCandidate(item)}
                           >
-                            <span className="justify-center p-2 px-4 rounded transition-colors duration-300 cursor-pointer me-2 fs-4 fw-semibold bg-slate-200 hover:bg-blue-600 hover:text-white">
+                            <span className="justify-center p-2 px-4 rounded transition-colors duration-300 cursor-pointer me-2 fs-4 fw-semibold bg-slate-200 hover:bg-green-600 hover:text-white">
                               {item.applicantCount}
                             </span>
                           </div>
@@ -352,12 +352,11 @@ const JobsPosted = () => {
                           </div>
 
                           <a
-                            // onClick={() => handleDeleteBanner(item.id)}
                             onClick={() => {
                               setDeleteItemId(item._id); // Set the deleteItemId when the delete button is clicked
                               setIsModalOpen(true); // Open the modal
                             }}
-                            className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                            className="btn btn-icon btn-bg-light btn-active-color-danger btn-sm hover:bg-red-500"
                           >
                             <i className="bi bi-trash3-fill fs-3"></i>
                           </a>

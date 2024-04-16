@@ -42,7 +42,8 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
         <h3 className="card-title align-items-start flex-column">
           <span
             className="mb-1 card-label fw-bolder fs-1"
-            style={{ color: "#4c9af3" }}
+            style={{ color: "rgb(33 56 79)" }}
+            // style={{ color: "#4c9af3" }}
           >
             Candidates table
           </span>
@@ -81,8 +82,8 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                     <div className="d-flex align-items-center">
                       <div className="d-flex justify-content-start flex-column">
                         <a
-                          href={candidate.resume}
-                          className="text-gray-600 text-hover-primary fs-5 clamp-4"
+                          href='#'
+                          className="text-gray-600 cursor-default text-hover-primary fs-5 clamp-4"
                         >
                           {candidate.name}
                         </a>
@@ -92,7 +93,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                   <td>
                     <a
                       href="#"
-                      className="text-gray-600 text-hover-primary d-block fs-5 clamp-2"
+                      className="text-gray-600 cursor-default text-hover-primary d-block fs-5 clamp-2"
                     >
                       {candidate.jobTitle}
                     </a>
@@ -105,7 +106,7 @@ const TablesWidget11: FC<Props> = ({ className, candidates }) => {
                   <td className="">
                     <a
                       href={candidate.resume}
-                      className="btn btn-sm btn-light btn-active-light-primary"
+                      className="btn btn-sm btn-light btn-active-green hover:text-green-600"
                       data-kt-menu-trigger="click"
                       data-kt-menu-placement="bottom-end"
                       style={{ color: "gray" }}

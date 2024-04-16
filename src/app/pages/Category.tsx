@@ -7,15 +7,25 @@ import axios from "axios";
 import API from "../ApiRoutes";
 import toast from "react-hot-toast";
 import NewCategoryModal from "../component/NewCategoryModal";
+import UpdateCat from "../component/updateCategory";
 
 const Category = () => {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModal, setIsEditModal] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string | null>(null);
+  const [item, setItem] = useState({});
   const [categories, setCategories] = useState<
     { _id: number; category: string }[]
   >([]);
+
+  const [editingCategory, setEditingCategory] = useState<string | null>(null);
+
+  // Function to handle opening the modal with the selected category name
+  const handleEditCategory = (categoryName: string) => {
+    setIsEditModal(true);
+  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -26,6 +36,7 @@ const Category = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setIsEditModal(false)
   };
   const { setTitle } = useTitle();
   const fetchCategories = async () => {
@@ -38,8 +49,8 @@ const Category = () => {
   const handleDelete = async (id: any) => {
     try {
       await axios.delete(`${API.cat}/${id}`);
-      toast.success("Location deleted successfully");
-      fetchCategories()
+      toast.success("Category deleted successfully");
+      fetchCategories();
     } catch (error) {
       console.log("error", error);
     }
@@ -68,8 +79,8 @@ const Category = () => {
             <div className="flex flex-row gap-6 justify-start space-y-1">
               <div className="my-1 d-flex align-items-center position-relative">
                 <button
-                  className="p-4 px-6 mt-6 font-bold rounded cursor-pointer fs-6"
-                  style={{ backgroundColor: "#dc2626", color: "#ffffff" }}
+                  className="p-4 px-6 mt-6 font-bold bg-red-600 rounded cursor-pointer hover:bg-green-600 fs-6"
+                  style={{ color: "#ffffff" }}
                   onClick={handleOpenModal}
                 >
                   Add Category {/* Use bi-plus-lg for larger size */}
@@ -124,16 +135,21 @@ const Category = () => {
 
                     <td>
                       <div className="flex-shrink-0 d-flex justify-content-end">
-                        {/* <a
+                        <a
                           href="#"
+                          onClick={() => {
+                            handleEditCategory(item);
+                            setIsEditModal(true); // Open the modal
+                            setItem(item);
+                          }}
                           className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
                         >
                           <i className="bi bi-pencil-square fs-3"></i>
-                        </a> */}
+                        </a>
 
                         <a
                           href="#"
-                          className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                          className="btn btn-icon btn-bg-light btn-active-color-danger btn-sm"
                           onClick={() => {
                             setDeleteItemId(item._id); // Set the deleteItemId when the delete button is clicked
                             setIsModalOpen(true); // Open the modal
@@ -160,6 +176,13 @@ const Category = () => {
           onCancel={handleCancel}
           onConfirm={handleConfirmDelete}
         />
+        {isEditModal && (
+          <UpdateCat
+            onClose={handleCloseModal}
+            fetchCategories={fetchCategories}
+            item={item}
+          />
+        )}
       </div>
     </div>
   );

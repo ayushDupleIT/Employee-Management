@@ -28,7 +28,8 @@ const TablesWidget10: FC<Props> = ({ className, jobs }) => {
         <h3 className="card-title align-items-start flex-column">
           <span
             className="mb-1 card-label fw-bolder fs-1"
-            style={{ color: "#4c9af3" }}
+            style={{ color: "rgb(33 56 79)" }}
+            // style={{ color: "#4c9af3" }}
           >
             Jobs Table
           </span>
@@ -66,7 +67,7 @@ const TablesWidget10: FC<Props> = ({ className, jobs }) => {
                   <td style={{ maxWidth: "160px" }}>
                     <a
                       href="#"
-                      className="text-gray-600 text-hover-primary d-block fs-5"
+                      className="text-gray-600 cursor-default text-hover-primary d-block fs-5"
                       style={{
                         display: "-webkit-box",
                         WebkitLineClamp: "2",
@@ -86,7 +87,7 @@ const TablesWidget10: FC<Props> = ({ className, jobs }) => {
                         __html: job.description.replace(/<br\s*\/?>/g, ""),
                       }} // Replace <br> tags with empty string
                       href="#"
-                      className="text-gray-600 text-hover-primary d-block fs-5 ck-p-m"
+                      className="text-gray-600 cursor-default text-hover-primary d-block fs-5 ck-p-m"
                       style={{
                         display: "-webkit-box",
                         WebkitLineClamp: "1",
