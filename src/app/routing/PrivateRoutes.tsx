@@ -15,6 +15,7 @@ import EditApplication from "../pages/EditApplication";
 import { PostJob } from "../pages/PostJob";
 import JobsCandidate from "../pages/jobsCandidates";
 import Category from "../pages/category";
+import Contact from "../pages/contact";
 
 
 const PrivateRoutes = () => {
@@ -40,6 +41,7 @@ const PrivateRoutes = () => {
         <Route path="location" element={<Location />} />
         <Route path="category" element={<Category />} />
         <Route path="editapplication" element={<EditApplication />} />
+        <Route path="contact" element={<Contact />} />
         <Route path="jobs-candidates" element={<JobsCandidate />} />
         <Route path="post-a-job" element={<PostJob />} />
         <Route

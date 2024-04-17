@@ -15,7 +15,7 @@ export function AsideMenuMain() {
           </span>
         </div> */}
       </div>
-      
+
       <AsideMenuItem
         to="/dashboard"
         title="Dashboard"
@@ -58,7 +58,12 @@ export function AsideMenuMain() {
         // icon="gift"
         fontIcon="bi bi-list-ul"
       />
-    
+      <AsideMenuItem
+        to="/contact"
+        title="Contact"
+        // icon="gift"
+        fontIcon="bi bi-info-circle"
+      />
     </>
   );
 }
