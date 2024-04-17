@@ -14,7 +14,7 @@
 	.aside-toolbar {
 		// Separator
 		.aside-user {
-			border-top: 1px dashed $light-light-dark;
+			border-top: 1px  $light-light-dark;
 			padding: 0 get($aside-config, padding-x);
 
 			[data-bs-theme="dark"] & {
@@ -24,8 +24,8 @@
 
 		// Aside search
 		.aside-search {			 
-			border-top: 1px dashed $light-light-dark;
-			border-bottom: 1px dashed $light-light-dark;
+			border-top: 1px  $light-light-dark;
+			border-bottom: 1px $light-light-dark;
 			padding: 0 get($aside-config, padding-x);
 
 			.search-icon {

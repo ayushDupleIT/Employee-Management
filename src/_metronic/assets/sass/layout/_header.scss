@@ -32,12 +32,12 @@
 
 		// Brand
 		.header-brand {			
-			background-color: #2d322c;
+			background-color: whitesmoke;
 			height: get($header-config, height, desktop);
 			padding: 0 get($aside-config, padding-x);
 			width: get($aside-config, width);
 			border-right: var(--#{$prefix}aside-border);
-			border-bottom: 1px dashed $light-light-dark;
+			border-bottom: 1px $light-light-dark;
 			flex-shrink: 0;
 		}
 

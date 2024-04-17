@@ -196,7 +196,7 @@ const PostJob: React.FC = () => {
 
             <div className="mb-6 row">
               <label className="col-lg-4 col-form-label required fw-bold fs-6">
-                Field
+                Category
               </label>
               <div className="w-full col-lg-8 fv-row d-flex flex-column">
                 <div className="mb-3 d-flex align-items-center">

@@ -45,7 +45,7 @@ const LogOut: React.FC<ConfirmationModalProps> = ({
               type="button"
               className="inline-flex justify-center px-6 py-3 mr-5 text-base font-medium text-white rounded-md border border-transparent shadow-sm bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
             >
-              Delete
+              Log out
             </button>
             <button
               onClick={onCancel}

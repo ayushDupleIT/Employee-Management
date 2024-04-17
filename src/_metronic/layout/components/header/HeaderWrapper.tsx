@@ -4,7 +4,8 @@ import { KTIcon, toAbsoluteUrl } from "../../../helpers";
 import { useLayout } from "../../core";
 import { HeaderToolbar } from "./HeaderToolbar";
 import { TitleProvider } from "../../../../app/routing/TitleProvider";
-import IMG from "../../../../media/logos/IMG-20240415-WA0024.jpg";
+// import IMG from "../../../../media/logos/IMG-20240415-WA0024.jpg";
+import IMG from "../../../../media/logos/Nice Job Logo.png";
 
 export function HeaderWrapper() {
   const { config, classes, attributes } = useLayout();
@@ -24,17 +25,17 @@ export function HeaderWrapper() {
         {/* begin::Brand */}
         <div className={clsx("header-brand")}>
           {/* begin::Logo */}
-          <div className={clsx("flex items-center")}>
+          <div className={clsx("flex items-center text-center")}>
             {/* begin::Logo */}
             <Link to="/">
               <img
                 alt="Logo"
                 src={IMG}
-                className="rounded-lg h-20px h-lg-50px"
-                style={{ width: "auto", height: "100%" }}
+                className="rounded-lg"
+                style={{ width: "110px", height: "100px" }}
               />
             </Link>
-            <h1 className="ml-3 text-white fs-3">Admin Dashboard</h1>
+            {/* <h1 className="ml-8 text-black fs-6">Admin Dashboard</h1> */}
           </div>
 
           {/* end::Logo */}
