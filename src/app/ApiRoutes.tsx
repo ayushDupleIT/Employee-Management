@@ -24,7 +24,7 @@ const API = {
   view_pdf: AWS_S3,
   subject: SUBJECT_URL,
   location: LOCATION_URL,
-  CONTACT: CONTACT
+  CONTACT: CONTACT,
 };
 
 export default API;

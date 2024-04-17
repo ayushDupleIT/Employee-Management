@@ -13,6 +13,8 @@ const profileDetailsSchema = Yup.object().shape({
   email: Yup.string().required("email is required"),
   whatsapp: Yup.string().required("whatsapp is required"),
   phone: Yup.string().required("phone is required"),
+  heading: Yup.string().required("Heading is required"),
+  subheading: Yup.string().required("Subheading is required"),
 });
 
 const indianStates = [
@@ -58,7 +60,7 @@ const indianStates = [
 const Contact: React.FC = () => {
   const [data, setData] = useState<any>({});
   const [selectedItemId, setSelectedItemId] = useState<string | null>(
-    "661fbe55dfaf0376fc5c949e"
+    "661fc704c860db14ad4769ca"
   );
   const [loading, setLoading] = useState(false);
   const [jobLocations, setLocation] = useState<{ name: string }[]>([]);
@@ -96,13 +98,15 @@ const Contact: React.FC = () => {
     email: string;
     whatsapp: string;
     phone: string;
+    heading: string;
+    subheading: string;
   }
 
   useEffect(() => {
     setTitle("Contact Page");
   }, []);
 
-  const id = "661fbe55dfaf0376fc5c949e";
+  const id = "661fc704c860db14ad4769ca";
   const fetchContact = async () => {
     try {
       const fetchData: any = await axios.get<ContactData>(
@@ -114,6 +118,8 @@ const Contact: React.FC = () => {
       formik.setFieldValue("email", data.email);
       formik.setFieldValue("phone", data.phone);
       formik.setFieldValue("whatsapp", data.whatsapp);
+      formik.setFieldValue("heading", data.heading);
+      formik.setFieldValue("subheading", data.subheading);
 
       setSelectedItemId(id);
     } catch (error) {
@@ -126,6 +132,15 @@ const Contact: React.FC = () => {
   }, []);
 
   console.log(formik.errors);
+
+  const handleChangeHeading = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    formik.setFieldValue("heading", value);
+  };
+  const handleChangeSubHeading = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    formik.setFieldValue("subheading", value);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -158,6 +173,64 @@ const Contact: React.FC = () => {
       <div id="kt_account_profile_details" className="show">
         <form onSubmit={formik.handleSubmit} noValidate className="form">
           <div className="p-9 card-body border-top">
+            <div className="mb-6 row">
+              <label className="col-lg-4 col-form-label required fw-bold fs-6">
+                Heading
+              </label>
+
+              <div className="col-lg-8">
+                <div className="row">
+                  <div className="col-lg-12 fv-row">
+                    <input
+                      type="text"
+                      className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
+                      placeholder="recruit@thekeyjobs.com"
+                      onChange={handleChangeHeading}
+                      value={formik.values.heading || data?.heading}
+                      name="heading"
+                      // onChange={formik.handleChange}
+                    />
+                    {formik.touched.heading && formik.errors.heading && (
+                      <div className="fv-plugins-message-container">
+                        <div className="fv-help-block">
+                          {formik.errors.heading}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mb-6 row">
+              <label className="col-lg-4 col-form-label required fw-bold fs-6">
+                Sub-heading
+              </label>
+
+              <div className="col-lg-8">
+                <div className="row">
+                  <div className="col-lg-12 fv-row">
+                    <input
+                      type="text"
+                      className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
+                      placeholder="recruit@thekeyjobs.com"
+                      onChange={handleChangeSubHeading}
+                      value={formik.values.subheading || data?.subheading}
+                      name="subheading"
+                      // onChange={formik.handleChange}
+                    />
+                    {formik.touched.subheading && formik.errors.subheading && (
+                      <div className="fv-plugins-message-container">
+                        <div className="fv-help-block">
+                          {formik.errors.subheading}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="mb-6 row">
               <label className="col-lg-4 col-form-label required fw-bold fs-6">
                 Email
