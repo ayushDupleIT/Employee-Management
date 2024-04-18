@@ -4,6 +4,7 @@
 // const SUBJECT_URL = "http://localhost:8080/subject/";
 // const LOCATION_URL = "http://localhost:8080/location/";
 // const CONTACT = "http://localhost:8080/contact/";
+// const LOGIN = "http://localhost:8080/admin/login/";
 
 const JOB_URL = "https://jobs.dupleit.com:8080/job/";
 const CANDIDATE_URL = "https://jobs.dupleit.com:8080/candidate/";
@@ -12,6 +13,7 @@ const LOCATION_URL = "https://jobs.dupleit.com:8080/location/";
 const CAT_URL = "https://jobs.dupleit.com:8080/cat/";
 const CONTACT = "https://jobs.dupleit.com:8080/contact/";
 const AWS_S3 = "https://jobs.dupleit.com:8080/aws-s3/image-upload/";
+const LOGIN = "https://jobs.dupleit.com:8080/admin/login";
 
 const API = {
   // Jobs
@@ -25,6 +27,7 @@ const API = {
   subject: SUBJECT_URL,
   location: LOCATION_URL,
   CONTACT: CONTACT,
+  LOGIN: LOGIN,
 };
 
 export default API;

@@ -13,6 +13,7 @@ import NotificationsContainer from "./NotificationsContainer"; // Import Notific
 import API from "../../../../app/ApiRoutes";
 import axios from "axios";
 import LogOut from "../../../../app/component/logOut";
+import useAuthStore from "../../../../app/store";
 
 const HeaderToolbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -28,10 +29,12 @@ const HeaderToolbar = () => {
 
   const { classes } = useLayout();
   const [status, setStatus] = useState<string>("1");
-  const { currentUser, logout } = useAuth();
+  // const { currentUser, logout } = useAuth();
   const [notifications, setIsNotifications] = useState([]);
   const [modal, setModal] = useState(false);
 
+
+  const { logout } = useAuthStore((state : any)=> state)
   const fetchNotifications = async () => {
     try {
       const response: any = await axios.get(
