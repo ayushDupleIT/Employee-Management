@@ -32,24 +32,11 @@ const Candidates = () => {
   const [pdfFile, setPdfFile] = useState<string>("");
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
 
-  const handleViewPdf = (item: any) => {
-    setPdfFile(item.resume);
-    setIsPdfViewerOpen(true);
-  };
 
   const handleClosePdfViewer = () => {
     setIsPdfViewerOpen(false);
   };
 
-  const handleDownload = (resumeUrl: any) => {
-    // Create a temporary link element
-    const link = document.createElement("a");
-    link.href = resumeUrl;
-    link.download = "resume"; // You can set a default name for the downloaded file
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
 
   useEffect(() => {
     setTitle("Candidates Page");

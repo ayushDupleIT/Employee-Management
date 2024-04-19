@@ -222,7 +222,7 @@ export function Login() {
         {/* end::Action */}
         <div className="text-center text-gray-500 fw-semibold fs-6">
           © The Key Jobs{" "}
-          <Link to="/auth/registration" className="link-primary">
+          <Link to="#" className="link-primary">
             2024
           </Link>
         </div>

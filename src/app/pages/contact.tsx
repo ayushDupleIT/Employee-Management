@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API from "../ApiRoutes";
-import { Editor } from "../component/Editor";
 import toast from "react-hot-toast";
 import { useTitle } from "../routing/TitleProvider";
 
@@ -16,46 +15,6 @@ const profileDetailsSchema = Yup.object().shape({
   heading: Yup.string().required("Heading is required"),
   subheading: Yup.string().required("Subheading is required"),
 });
-
-const indianStates = [
-  { name: "Andaman and Nicobar Islands" },
-  { name: "Andhra Pradesh" },
-  { name: "Arunachal Pradesh" },
-  { name: "Assam" },
-  { name: "Bihar" },
-  { name: "Chandigarh" },
-  { name: "Chhattisgarh" },
-  { name: "Dadra and Nagar Haveli" },
-  { name: "Daman and Diu" },
-  { name: "Delhi" },
-  { name: "Goa" },
-  { name: "Gujarat" },
-  { name: "Haryana" },
-  { name: "Himachal Pradesh" },
-  { name: "Jammu and Kashmir" },
-  { name: "Jharkhand" },
-  { name: "Karnataka" },
-  { name: "Kerala" },
-  { name: "Ladakh" },
-  { name: "Lakshadweep" },
-  { name: "Madhya Pradesh" },
-  { name: "Maharashtra" },
-  { name: "Manipur" },
-  { name: "Meghalaya" },
-  { name: "Mizoram" },
-  { name: "Nagaland" },
-  { name: "Odisha" },
-  { name: "Puducherry" },
-  { name: "Punjab" },
-  { name: "Rajasthan" },
-  { name: "Sikkim" },
-  { name: "Tamil Nadu" },
-  { name: "Telangana" },
-  { name: "Tripura" },
-  { name: "Uttar Pradesh" },
-  { name: "Uttarakhand" },
-  { name: "West Bengal" },
-];
 
 const Contact: React.FC = () => {
   const [data, setData] = useState<any>({});
@@ -75,7 +34,6 @@ const Contact: React.FC = () => {
     onSubmit: async (values: any) => {
       try {
         setLoading(true);
-        // Send PATCH request to update the data
         const response = await axios.patch(
           `${API.CONTACT}/${selectedItemId}`,
           values
@@ -83,7 +41,6 @@ const Contact: React.FC = () => {
         console.log("Update response:", response.data);
         setLoading(false);
         toast.success("Contact Details Updated Successfully");
-        // window.location.reload()
         navigate("/");
       } catch (error) {
         console.error("Error updating job:", error);
@@ -93,7 +50,6 @@ const Contact: React.FC = () => {
   });
 
   interface ContactData {
-    // Define the properties of the job data
     _id: any;
     email: string;
     whatsapp: string;

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { KTIcon, toAbsoluteUrl } from "../../_metronic/helpers";
 import { useTitle } from "../routing/TitleProvider";
-import SubjectModal from "../component/SubjectModal";
 import ConfirmationModal from "../component/confirmationModal";
 import axios from "axios";
 import API from "../ApiRoutes";
@@ -19,10 +17,6 @@ const Category = () => {
   const [categories, setCategories] = useState<
     { _id: number; category: string }[]
   >([]);
-
-  const [editingCategory, setEditingCategory] = useState<string | null>(null);
-
-  // Function to handle opening the modal with the selected category name
   const handleEditCategory = (categoryName: string) => {
     setIsEditModal(true);
   };
@@ -71,9 +65,6 @@ const Category = () => {
   return (
     <div>
       <div className={`card`}>
-        {/* Your existing card content */}
-        {/* ... */}
-        {/* New dynamic rendering using state data */}
         <div className="py-3 card-body">
           <div className="flex justify-end pb-10">
             <div className="flex flex-row gap-6 justify-start space-y-1">
