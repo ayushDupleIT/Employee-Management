@@ -77,14 +77,15 @@ export function ChangePassword() {
   };
 
   return (
-    <form
-      className="form w-100 fv-plugins-bootstrap5 fv-plugins-framework"
+   <div className="">
+     <form
+      className="p-10 bg-white rounded-lg shadow-lg form w-100 fv-plugins-bootstrap5 fv-plugins-framework"
       noValidate
       id="kt_login_password_reset_form"
       onSubmit={formik.handleSubmit}
     >
       <div className="mb-10 text-center">
-        <h1 className="mb-3 text-gray-900 fw-bolder">Change Password</h1>
+      <span className="flex justify-center text-gray-600 align-middle fw-bolder fs-1 d-flex">Change Password</span>
       </div>
 
       {/* begin::Form group */}
@@ -213,5 +214,6 @@ export function ChangePassword() {
       </div>
       {/* end::Form group */}
     </form>
+   </div>
   );
 }
