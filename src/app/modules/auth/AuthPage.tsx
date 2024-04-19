@@ -1,6 +1,6 @@
 import {Route, Routes} from 'react-router-dom'
 import {Registration} from './components/Registration'
-import {ForgotPassword} from './components/ForgotPassword'
+import {ChangePassword} from './components/ChangePassword'
 import {Login} from './components/Login'
 import {AuthLayout} from './AuthLayout'
 
@@ -9,7 +9,7 @@ const AuthPage = () => (
     <Route element={<AuthLayout />}>
       <Route path='login' element={<Login />} />
       <Route path='registration' element={<Registration />} />
-      <Route path='forgot-password' element={<ForgotPassword />} />
+      <Route path='update-password' element={<ChangePassword />} />
       <Route index element={<Login />} />
     </Route>
   </Routes>

@@ -7,6 +7,7 @@ import { getUserByToken, login } from "../core/_requests";
 import { toAbsoluteUrl } from "../../../../_metronic/helpers";
 import { useAuth } from "../core/Auth";
 import useAuthStore from "../../../store";
+import axios from "axios";
 const loginSchema = Yup.object().shape({
   email: Yup.string()
     .email("Wrong email format")
@@ -46,8 +47,13 @@ export function Login() {
         setErrorMessage(Response?.data?.message);
       } catch (error) {
         console.error(error);
-        // saveAuth(undefined)
-        setStatus("The login details are incorrect");
+        if (axios.isAxiosError(error)) {
+          const message =
+            error.response?.data?.data?.message || "An unknown error occurred";
+          // toast.error(message);
+          setStatus(message)
+        } 
+        // setStatus("The login details are incorrect");
         // setSubmitting(false)
         setLoading(false);
       } finally {
@@ -134,7 +140,7 @@ export function Login() {
       <div className="flex-wrap gap-3 mb-8 d-flex flex-stack fs-base fw-semibold">
         <div />
         {/* begin::Link */}
-        <Link to='/auth/forgot-password' className='link-primary'>
+        <Link to='/auth/update-password' className='link-primary'>
           Change Password 
         </Link>
         {/* end::Link */}

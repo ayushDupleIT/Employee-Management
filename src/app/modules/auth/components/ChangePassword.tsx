@@ -1,19 +1,22 @@
 import { useState } from "react";
 import * as Yup from "yup";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { requestPassword } from "../core/_requests";
 import API from "../../../ApiRoutes";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import toast from "react-hot-toast";
 
 const initialValues = {
+  email: "",
   current: "",
   new: "",
   confirm: "",
 };
 
 const passwordSchema = Yup.object().shape({
+  email: Yup.string().required("Email is required"),
   current: Yup.string().required("Current Password is required"),
   new: Yup.string()
     .required("New Password is required")
@@ -28,15 +31,16 @@ const passwordSchema = Yup.object().shape({
 });
 
 interface FormValues {
+  email: string;
   current: string;
   new: string;
   confirm: string;
 }
 
-export function ForgotPassword() {
+export function ChangePassword() {
   const [loading, setLoading] = useState(false);
   const [hasErrors, setHasErrors] = useState<boolean | undefined>(undefined);
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues,
     validationSchema: passwordSchema,
@@ -44,24 +48,25 @@ export function ForgotPassword() {
       setLoading(true);
       setHasErrors(undefined);
 
-      // Prepare payload
       const payload = {
+        email: values.email,
         oldPassword: values.current,
         newPassword: values.new,
       };
 
-      // Call API to change password
       try {
-        const api = await axios.post(API.LOGIN, payload);
-        console.log("api", api);
-        // Call your requestPassword function passing payload
-        // await requestPassword(payload);
-        // Handle success
+        await axios.post(`${API.LOGIN}/change-password`, payload);
+        toast.success("Password Updated successfully");
+        navigate("/auth");
       } catch (error) {
-        // Handle error
+        if (axios.isAxiosError(error)) {
+          const message =
+            error.response?.data.message || "An unknown error occurred";
+          toast.error(message);
+        } else {
+          toast.error("An error occurred");
+        }
         setHasErrors(true);
-      } finally {
-        setLoading(false);
       }
     },
   });
@@ -83,6 +88,29 @@ export function ForgotPassword() {
       </div>
 
       {/* begin::Form group */}
+
+      <div className="mb-8 fv-row">
+        <label className="text-gray-900 form-label fw-bolder fs-6">Email</label>
+        <input
+          type="email"
+          placeholder=""
+          autoComplete="off"
+          name="email"
+          onChange={handleChange}
+          value={formik.values.email} // Set value from formik values
+          className={clsx("bg-transparent form-control", {
+            "is-invalid": formik.touched.email && formik.errors.email,
+          })}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <div className="fv-plugins-message-container">
+            <div className="fv-help-block">
+              <span role="alert">{formik.errors.email}</span>
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="mb-8 fv-row">
         <label className="text-gray-900 form-label fw-bolder fs-6">
           Current Password
