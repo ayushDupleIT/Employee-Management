@@ -60,6 +60,7 @@ const EditApplication: React.FC = () => {
   const [data, setData] = useState<any>({});
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [subjects, setSubjects] = useState<{ subject: string }[]>([]);
   const [jobLocations, setLocation] = useState<{ name: string }[]>([]);
 
   const navigate = useNavigate();
@@ -94,6 +95,15 @@ const EditApplication: React.FC = () => {
     // Add other properties here...
   }
 
+  const fetchSubjects = async () => {
+    try {
+      const subjects = await axios.get(API.subject);
+      setSubjects(subjects.data.data);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   const location: any = useLocation();
   console.log("formik errors", formik.errors);
   useEffect(() => {
@@ -121,7 +131,7 @@ const EditApplication: React.FC = () => {
 
       fetchJob(itemId);
     }
-
+    fetchSubjects();
     setLocation(indianStates);
   }, [location]);
 
@@ -284,10 +294,11 @@ const EditApplication: React.FC = () => {
                   onChange={handleSubjectChange} // Attach onChange event handler
                 >
                   <option value="">{data.subject}</option>
-                  <option value="job_listings">Job Listings</option>
-                  <option value="candidates">Candidates</option>
-                  <option value="applications">Applications</option>
-                  <option value="recruiters">Recruiters</option>
+                  {subjects.map((item, index) => (
+                    <option key={index} value={item.subject}>
+                      {item.subject}
+                    </option>
+                  ))}
                   {/* <option value="reports">Reports</option> */}
                   {/* Add more subjects as needed */}
                 </select>
