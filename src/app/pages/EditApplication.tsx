@@ -56,12 +56,19 @@ const indianStates = [
   { name: "West Bengal" },
 ];
 
+interface Location {
+  city: string;
+  state: string;
+  country: string;
+}
+
 const EditApplication: React.FC = () => {
   const [data, setData] = useState<any>({});
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [subjects, setSubjects] = useState<{ subject: string }[]>([]);
   const [jobLocations, setLocation] = useState<{ name: string }[]>([]);
+  const [locations, setLocations] = useState<Location[]>([]);
 
   const navigate = useNavigate();
   console.log("data ", data);
@@ -95,6 +102,13 @@ const EditApplication: React.FC = () => {
     // Add other properties here...
   }
 
+  const fetchLocation = async () => {
+    try {
+      const locations = await axios.get(API.location);
+      setLocations(locations.data.data);
+    } catch (error) {}
+  };
+  
   const fetchSubjects = async () => {
     try {
       const subjects = await axios.get(API.subject);
@@ -132,6 +146,7 @@ const EditApplication: React.FC = () => {
       fetchJob(itemId);
     }
     fetchSubjects();
+    fetchLocation()
     setLocation(indianStates);
   }, [location]);
 
@@ -268,9 +283,16 @@ const EditApplication: React.FC = () => {
                   <option selected value="">
                     {data?.location}
                   </option>
-                  {jobLocations.map((state, index) => (
-                    <option key={index} value={state.name}>
-                      {state.name}
+                  {locations.map((location, index) => (
+                    <option
+                      key={index}
+                      value={`${location.city}, ${
+                        location.state ? location.state + ", " : ""
+                      }${location.country}`}
+                    >
+                      {location.city}
+                      {location.state ? `, ${location.state}` : ""},{" "}
+                      {location.country}
                     </option>
                   ))}
                 </select>
