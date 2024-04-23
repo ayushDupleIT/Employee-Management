@@ -32,11 +32,9 @@ const Candidates = () => {
   const [pdfFile, setPdfFile] = useState<string>("");
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
 
-
   const handleClosePdfViewer = () => {
     setIsPdfViewerOpen(false);
   };
-
 
   useEffect(() => {
     setTitle("Candidates Page");
@@ -186,7 +184,7 @@ const Candidates = () => {
                           <div className="d-flex justify-content-start flex-column">
                             <a
                               href="#"
-                              className="text-gray-600 fw-bold text-hover-primary fs-4 clamp-1"
+                              className="text-gray-600 cursor-default fw-bold fs-4 clamp-1"
                             >
                               {item.name}
                             </a>
@@ -196,7 +194,7 @@ const Candidates = () => {
                       <td>
                         <a
                           href="#"
-                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
+                          className="text-gray-600 cursor-default fw-bold d-block fs-4 clamp-1"
                         >
                           {item.jobTitle}
                         </a>

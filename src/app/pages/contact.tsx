@@ -142,7 +142,7 @@ const Contact: React.FC = () => {
                       className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
                       placeholder="recruit@thekeyjobs.com"
                       onChange={handleChangeHeading}
-                      value={formik.values.heading || data?.heading}
+                      value={formik.values.heading }
                       name="heading"
                       // onChange={formik.handleChange}
                     />
@@ -171,7 +171,7 @@ const Contact: React.FC = () => {
                       className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
                       placeholder="recruit@thekeyjobs.com"
                       onChange={handleChangeSubHeading}
-                      value={formik.values.subheading || data?.subheading}
+                      value={formik.values.subheading}
                       name="subheading"
                       // onChange={formik.handleChange}
                     />
@@ -200,7 +200,7 @@ const Contact: React.FC = () => {
                       className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
                       placeholder="recruit@thekeyjobs.com"
                       onChange={handleChange}
-                      value={formik.values.email || data?.email}
+                      value={formik.values.email}
                       name="email"
                       // onChange={formik.handleChange}
                     />
@@ -229,7 +229,7 @@ const Contact: React.FC = () => {
                       className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
                       placeholder="9166262453"
                       onChange={handleChangeClient}
-                      value={formik.values.whatsapp || data?.whatsapp}
+                      value={formik.values.whatsapp}
                       name="whatsapp"
                       // onChange={formik.handleChange}
                     />
@@ -258,7 +258,7 @@ const Contact: React.FC = () => {
                       className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
                       placeholder="8708193451"
                       onChange={handleChangePhone}
-                      value={formik.values.phone || data?.phone}
+                      value={formik.values.phone}
                       name="phone"
                       // onChange={formik.handleChange}
                     />
@@ -275,7 +275,7 @@ const Contact: React.FC = () => {
             </div>
           </div>
 
-          <div className="card-footer d-flex justify-content-end">
+          <div className="gap-3 card-footer d-flex justify-content-end">
             <button
               type="submit"
               className="btn btn-primary"
@@ -291,6 +291,13 @@ const Contact: React.FC = () => {
                   <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
                 </span>
               )}
+            </button>
+            <button
+              type="button"
+              className="px-10 bg-gray-300 rounded-lg"
+              onClick={() => navigate(-1)}
+            >
+              <span className="fs-4 fw-semibold">Cancel</span>
             </button>
           </div>
         </form>

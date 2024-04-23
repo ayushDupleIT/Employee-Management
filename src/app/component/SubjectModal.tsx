@@ -74,14 +74,14 @@ const SubjectModal:React.FC<SubjectModalProps> = ({ onClose, fetchSubjects })  =
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="inline-flex justify-center px-6 py-3 mr-5 text-base font-medium text-white rounded-md border border-transparent shadow-sm bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
+                  className="inline-flex justify-center px-6 py-3 mr-5 font-medium text-white rounded-md border border-transparent shadow-sm fs-4 bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
                 >
                   Create
                 </button>
                 <button
                   onClick={onClose}
                   type="button"
-                  className="inline-flex justify-center px-6 py-3 text-base font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+                  className="inline-flex justify-center px-6 py-3 font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm fs-4 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
                 >
                   Cancel
                 </button>

@@ -306,6 +306,7 @@ const JobsPosted = () => {
                             <button
                               // onClick={() => handleLinkClick(item)}
                               className="text-gray-600 cursor-default fw-bold fs-4 clamp-1"
+                              style={{ cursor: "default" }}
                             >
                               {item.title}
                             </button>

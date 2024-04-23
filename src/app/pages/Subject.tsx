@@ -98,7 +98,7 @@ const Subject = () => {
                         <div className="d-flex justify-content-start flex-column">
                           <a
                             href="#"
-                            className="text-gray-600 fw-bold text-hover-primary fs-4"
+                            className="text-gray-600 cursor-default fw-bold fs-4"
                           >
                             {item.subject}
                           </a>

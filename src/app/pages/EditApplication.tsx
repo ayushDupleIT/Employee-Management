@@ -108,7 +108,7 @@ const EditApplication: React.FC = () => {
       setLocations(locations.data.data);
     } catch (error) {}
   };
-  
+
   const fetchSubjects = async () => {
     try {
       const subjects = await axios.get(API.subject);
@@ -146,8 +146,8 @@ const EditApplication: React.FC = () => {
       fetchJob(itemId);
     }
     fetchSubjects();
-    fetchLocation()
-    setLocation(indianStates);
+    fetchLocation();
+    // setLocation(indianStates);
   }, [location]);
 
   const formatDate = (dateString: string): string => {
@@ -223,7 +223,7 @@ const EditApplication: React.FC = () => {
                       className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
                       placeholder="Software"
                       onChange={handleChange}
-                      value={formik.values.title || data?.title}
+                      value={formik.values.title}
                       name="title"
                       // onChange={formik.handleChange}
                     />
@@ -252,7 +252,7 @@ const EditApplication: React.FC = () => {
                       className="mb-3 form-control form-control-lg form-control-solid mb-lg-0"
                       placeholder="Banking"
                       onChange={handleChangeClient}
-                      value={formik.values.client || data?.client}
+                      value={formik.values.client}
                       name="client"
                       // onChange={formik.handleChange}
                     />
@@ -275,7 +275,7 @@ const EditApplication: React.FC = () => {
               <div className="col-lg-8 fv-row">
                 <select
                   className="form-select form-select-solid form-select-lg fw-bold"
-                  value={formik.values.location || data?.location} // Bind value to state variable
+                  value={formik.values.location} // Bind value to state variable
                   onChange={(e) => {
                     formik.setFieldValue("location", e.target.value);
                   }} // Attach onChange event handler
@@ -338,7 +338,7 @@ const EditApplication: React.FC = () => {
 
               <div className="col-lg-8 fv-row">
                 <Editor
-                  value={formik.values.description || data.description}
+                  value={formik.values.description}
                   onChange={handleEditorChange}
                 />
                 {/* <CKEditor
@@ -353,7 +353,7 @@ const EditApplication: React.FC = () => {
             </div>
           </div>
 
-          <div className="card-footer d-flex justify-content-end">
+          <div className="gap-3 card-footer d-flex justify-content-end">
             <button
               type="submit"
               className="btn btn-primary"
@@ -369,6 +369,14 @@ const EditApplication: React.FC = () => {
                   <span className="align-middle spinner-border spinner-border-sm ms-2"></span>
                 </span>
               )}
+            </button>
+
+            <button
+              type="button"
+              className="px-10 bg-gray-300 rounded-lg"
+              onClick={() => navigate(-1)}
+            >
+              <span className="fs-4 fw-semibold">Cancel</span>
             </button>
           </div>
         </form>

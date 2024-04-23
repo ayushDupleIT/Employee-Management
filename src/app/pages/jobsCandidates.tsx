@@ -237,7 +237,7 @@ const JobsCandidate = () => {
                           <div className="d-flex justify-content-start flex-column">
                             <a
                               href="#"
-                              className="text-gray-600 fw-bold text-hover-primary fs-4 clamp-1"
+                              className="text-gray-600 cursor-default fw-bold fs-4 clamp-1"
                             >
                               {item.name}
                             </a>
@@ -247,7 +247,7 @@ const JobsCandidate = () => {
                       <td>
                         <a
                           href="#"
-                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
+                          className="text-gray-600 cursor-default fw-bold d-block fs-4 clamp-1"
                         >
                           {item.jobTitle}
                         </a>
@@ -255,7 +255,7 @@ const JobsCandidate = () => {
                       <td className="text-end">
                         <a
                           href="#"
-                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
+                          className="text-gray-600 cursor-default fw-bold d-block fs-4 clamp-1"
                         >
                           {item.email}
                         </a>
@@ -263,7 +263,7 @@ const JobsCandidate = () => {
                       <td className="">
                         <a
                           href="#"
-                          className="text-gray-600 fw-bold text-hover-primary d-block fs-4 clamp-1"
+                          className="text-gray-600 cursor-default fw-bold d-block fs-4 clamp-1"
                         >
                           {item.phone}
                         </a>

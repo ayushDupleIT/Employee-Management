@@ -24,7 +24,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <div className="justify-center sm:flex sm:items-start">
             <div className="mt-3 text-center sm:mt-0 sm:text-center">
               <h3
-                className="font-bold leading-6 text-gray-900 fs-4"
+                className="font-bold leading-6 text-gray-900 fs-3"
                 id="modal-headline"
               >
                 Delete Confirmation
@@ -43,14 +43,14 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             <button
               onClick={onConfirm}
               type="button"
-              className="inline-flex justify-center px-6 py-3 mr-5 text-base font-medium text-white rounded-md border border-transparent shadow-sm bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
+              className="inline-flex justify-center px-6 py-3 mr-5 font-medium text-white rounded-md border border-transparent shadow-sm fs-4 bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"
             >
               Delete
             </button>
             <button
               onClick={onCancel}
               type="button"
-              className="inline-flex justify-center px-6 py-3 text-base font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
+              className="inline-flex justify-center px-6 py-3 font-medium text-gray-700 bg-white rounded-md border border-gray-300 shadow-sm fs-4 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm"
             >
               Cancel
             </button>
