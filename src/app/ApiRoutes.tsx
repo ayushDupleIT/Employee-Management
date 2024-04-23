@@ -6,14 +6,14 @@
 // const CONTACT = "http://localhost:8080/contact/";
 // const LOGIN = "http://localhost:8080/admin";
 
-const JOB_URL = "https://jobs.dupleit.com:8080/job/";
-const CANDIDATE_URL = "https://jobs.dupleit.com:8080/candidate/";
-const SUBJECT_URL = "https://jobs.dupleit.com:8080/subject/";
-const LOCATION_URL = "https://jobs.dupleit.com:8080/location/";
-const CAT_URL = "https://jobs.dupleit.com:8080/cat/";
-const CONTACT = "https://jobs.dupleit.com:8080/contact/";
-const AWS_S3 = "https://jobs.dupleit.com:8080/aws-s3/image-upload/";
-const LOGIN = "https://jobs.dupleit.com:8080/admin/";
+const JOB_URL = "https://thekeyjobs.com:8080/job/";
+const CANDIDATE_URL = "https://thekeyjobs.com:8080/candidate/";
+const SUBJECT_URL = "https://thekeyjobs.com:8080/subject/";
+const LOCATION_URL = "https://thekeyjobs.com:8080/location/";
+const CAT_URL = "https://thekeyjobs.com:8080/cat/";
+const CONTACT = "https://thekeyjobs.com:8080/contact/";
+const AWS_S3 = "https://thekeyjobs.com:8080/aws-s3/image-upload/";
+const LOGIN = "https://thekeyjobs.com:8080/admin/";
 
 const API = {
   // Jobs
