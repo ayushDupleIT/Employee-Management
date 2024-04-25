@@ -4,6 +4,7 @@
 // const SUBJECT_URL = "http://localhost:8080/subject/";
 // const LOCATION_URL = "http://localhost:8080/location/";
 // const CONTACT = "http://localhost:8080/contact/";
+// const AWS_S3 = "https://thekeyjobs.com:8080/aws-s3/image-upload/";
 // const LOGIN = "http://localhost:8080/admin";
 
 const JOB_URL = "https://thekeyjobs.com:8080/job/";

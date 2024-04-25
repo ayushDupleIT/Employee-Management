@@ -89,6 +89,17 @@ const JobsCandidate = () => {
     }
   };
 
+  const markSeen = async () => {
+    try {
+      if (location?.state?.itemId) {
+        const itemId: any = location?.state?.itemId;
+        await axios.post(`${API.CANDIDATE_URL}/mark-seen-by-Admin/${itemId}`);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,6 +131,7 @@ const JobsCandidate = () => {
     };
 
     fetchData();
+    markSeen();
   }, [location]);
 
   const handleViewPdf = (item: any) => {
@@ -230,8 +242,11 @@ const JobsCandidate = () => {
               <tbody>
                 {data.length > 0 ? (
                   data.map((item: any, index: any) => (
-                    <tr key={item.id}>
-                      <td>{(page - 1) * limit + (index + 1)}.</td>
+                    <tr
+                      key={item.id}
+                      className={item.seenByAdmin ? "" : "bg-sky-100"}
+                    >
+                      <td className="px-5">{(page - 1) * limit + (index + 1)}.</td>
                       <td>
                         <div className="d-flex align-items-center">
                           <div className="d-flex justify-content-start flex-column">
@@ -255,7 +270,7 @@ const JobsCandidate = () => {
                       <td className="text-end">
                         <a
                           href="#"
-                          className="text-gray-600 cursor-default fw-bold d-block fs-4 clamp-1"
+                          className="text-left text-gray-600 ursor-default fw-bold d-block fs-4 clamp-1"
                         >
                           {item.email}
                         </a>
@@ -295,13 +310,6 @@ const JobsCandidate = () => {
                           >
                             <i className="bi-cloud-arrow-down-fill fs-5"></i>
                           </a>
-                          {/* <a
-                            href="#"
-                            className="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                            onClick={() => handleDownload(item.resume)}
-                          >
-                            <i className="bi bi-eye-fill fs-3"></i>
-                          </a> */}
                         </div>
                       </td>
                     </tr>
