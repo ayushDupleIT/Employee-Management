@@ -30,7 +30,7 @@ const JobsCandidate = () => {
   const [itemId, setItemId] = useState<any>("");
   const [pdfFile, setPdfFile] = useState<string>("");
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState(false);
   const pdf = "../../../public/Invoice.pdf";
   useEffect(() => {
     setTitle("Job Candidates Page");
@@ -77,6 +77,7 @@ const JobsCandidate = () => {
   };
 
   const fetchPageData = async (page: number) => {
+    setLoading(true);
     try {
       const responseJobs = await axios.get(
         `${API.CANDIDATE_URL}/getCandidatesForJob/${itemId}?page=${page}`
@@ -84,8 +85,10 @@ const JobsCandidate = () => {
       console.log("responseJobs", responseJobs.data.data);
       setData(responseJobs.data.data);
       setTotal(responseJobs.data.count);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setLoading(false);
     }
   };
 
@@ -102,6 +105,7 @@ const JobsCandidate = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         if (location?.state?.itemId) {
           // Check if "itemId" exists in stat
@@ -113,7 +117,9 @@ const JobsCandidate = () => {
               );
               setData(fetchData.data.data);
               setTotal(fetchData.data.count);
+              setLoading(false);
             } catch (error) {
+              setLoading(false);
               console.error("Error fetching job data:", error);
               // Handle errors if needed
             }
@@ -240,13 +246,25 @@ const JobsCandidate = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.length > 0 ? (
+                {loading ? ( // Show loading indicator
+                  <tr>
+                    <td
+                      colSpan={7}
+                      className="justify-center text-center p-15 fs-4 fw-bold"
+                    >
+                      Loading...{" "}
+                      <span className="align-middle spinner-border spinner-border-sm me-2"></span>
+                    </td>
+                  </tr>
+                ) : data.length > 0 ? (
                   data.map((item: any, index: any) => (
                     <tr
                       key={item.id}
                       className={item.seenByAdmin ? "" : "bg-sky-100"}
                     >
-                      <td className="px-5">{(page - 1) * limit + (index + 1)}.</td>
+                      <td className="px-5">
+                        {(page - 1) * limit + (index + 1)}.
+                      </td>
                       <td>
                         <div className="d-flex align-items-center">
                           <div className="d-flex justify-content-start flex-column">
