@@ -25,7 +25,7 @@ type DataResponse = {
 interface Location {
   city: string;
   state: string;
-  country: string;
+  country: string
 }
 const indianStates = [
   { name: "Andaman and Nicobar Islands" },
